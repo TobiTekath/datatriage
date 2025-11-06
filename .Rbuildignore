@@ -1,0 +1,8 @@
+^datatriage\.Rproj$
+^\.Rproj\.user$
+^LICENSE\.md$
+^[.]?air[.]toml$
+^\.vscode$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

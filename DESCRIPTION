@@ -1,0 +1,29 @@
+Package: datatriage
+Title: Create Reproducible Data Cleaning Workflows
+Version: 0.0.0.9000
+Authors@R: 
+    c(person(given = "Tobias", family = "Tekath", role = c("aut", "cre"), email = "tobias.tekath@wwu.de", comment = c(ORCID = "0000-0002-9315-5452")))
+Description: Collection of functions to automate data type validations 
+    and detection of inconsistencies in data cleaning workflows.
+    Identifies values that do not match their expected data type, 
+    helping users quickly locate and resolve data quality issues.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Suggests: testthat (>= 3.0.0)
+Config/testthat/edition: 3
+NeedsCompilation: no
+Packaged: 2025-10-31 16:20:36 UTC; Tobi-PC
+Author: Tobias Tekath [aut, cre] (ORCID:
+    <https://orcid.org/0000-0002-9315-5452>)
+Maintainer: Tobias Tekath <tobias.tekath@wwu.de>
+Depends: R (>= 4.1.0)
+Imports:
+  checkmate,
+  dplyr,
+  readr,
+  rlang,
+  stringr,
+  tibble,
+  tidyselect
