@@ -2,6 +2,9 @@
 
 export(all_decimal_points_to_dot)
 export(all_to_character)
+export(case_modify)
+export(find_culprit)
 export(reguess_coltypes)
+export(remove_html)
 export(suppress_matching)
 export(tidy_t)

@@ -11,7 +11,7 @@ reguess_coltypes(df, convert_comma_to_dot = FALSE, silent = TRUE, ...)
 
 \item{convert_comma_to_dot}{Shall numeric-like characters with a comma as decimal point like '1,2' be converted to '1.2' before column type guessing?}
 
-\item{silent}{Suppress messages from \code{\link[readr:type_convert]{readr::type_convert()}} column type guessing.}
+\item{silent}{Suppress column specification message from \code{\link[readr:type_convert]{readr::type_convert()}} column type guessing.}
 
 \item{...}{
   Arguments passed on to \code{\link[readr:type_convert]{readr::type_convert}}

@@ -6,7 +6,7 @@
 #'
 #' @param df A data.frame or tibble which character columns class shall be re-guessed.
 #' @param convert_comma_to_dot Shall numeric-like characters with a comma as decimal point like '1,2' be converted to '1.2' before column type guessing?
-#' @param silent Suppress messages from [readr::type_convert()] column type guessing.
+#' @param silent Suppress column specification message from [readr::type_convert()] column type guessing.
 #' @inheritDotParams readr::type_convert -df
 #'
 #' @returns A similar object as `df`, but column types potentially have been changed.
@@ -30,7 +30,7 @@ reguess_coltypes <- function(df, convert_comma_to_dot = FALSE, silent = TRUE, ..
   }
 
   if (silent) {
-    suppressMessages(df <- readr::type_convert(df = df, ...))
+    suppress_matching(df <- readr::type_convert(df = df, ...), pattern = "Column specification", suppress_warnings = FALSE, suppress_cat_print = FALSE)
   } else {
     df <- readr::type_convert(df = df, ...)
   }
