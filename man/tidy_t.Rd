@@ -9,7 +9,9 @@ tidy_t(
   id_col = 1,
   exclude_cols = NULL,
   new_id_colname = NULL,
-  reguess_coltypes = FALSE
+  reguess_coltypes = FALSE,
+  name_repair = "unique",
+  verbose = FALSE
 )
 }
 \arguments{
@@ -23,6 +25,15 @@ tidy_t(
 
 \item{reguess_coltypes}{Shall a re-guessing of column types be performed after transposing?
 Allows to correctly retrieve e.g. numeric or logical columns by utilizing \code{\link[=reguess_coltypes]{reguess_coltypes()}}.}
+
+\item{name_repair}{Choose strategy to potentially repair 'id_col', e.g. for uniqueness. Is passed on to \code{\link[vctrs:vec_as_names]{vctrs::vec_as_names()}}, supporting among else the following strategies:
+\itemize{
+\item "minimal": No name repair or checks, beyond basic existence of names and replacing NA's.
+\item "unique": Make sure names are unique and not empty. A suffix is appended to duplicate names to make them unique.
+\item "universal": Make the names unique and syntactic, meaning that you can safely use the names as variables without causing a syntax error.
+}}
+
+\item{verbose}{Set verbosity of potential name_repair.}
 }
 \value{
 A transposed object - keeps object type of \code{df} input (data.frame or tibble).

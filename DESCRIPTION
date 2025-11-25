@@ -26,6 +26,7 @@ Imports:
   rlang,
   stringr,
   tibble,
-  tidyselect
+  tidyselect,
+  vctrs
 URL: https://github.com/TobiTekath/datatriage, https://tobitekath.github.io/datatriage/
 BugReports: https://github.com/TobiTekath/datatriage/issues

@@ -52,7 +52,7 @@ If \code{should_be} is \code{numeric}, the data type is interpreted as \code{dou
 \examples{
 long_data <- c(1, 2.2, "4,", 5)
 
-# standard type conversion would convert "<4" to NA
+# standard type conversion would convert "4," to NA
 \dontrun{
 as.numeric(long_data)
 }

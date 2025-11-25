@@ -10,6 +10,11 @@
 #' @param new_id_colname Rename the first column of the transposed object. If `NULL`, carry over the selected `id_col` column name.
 #' @param reguess_coltypes Shall a re-guessing of column types be performed after transposing?
 #' Allows to correctly retrieve e.g. numeric or logical columns by utilizing [reguess_coltypes()].
+#' @param name_repair Choose strategy to potentially repair 'id_col', e.g. for uniqueness. Is passed on to [vctrs::vec_as_names()], supporting among else the following strategies:
+#' * "minimal": No name repair or checks, beyond basic existence of names and replacing NA's.
+#' * "unique": Make sure names are unique and not empty. A suffix is appended to duplicate names to make them unique.
+#' * "universal": Make the names unique and syntactic, meaning that you can safely use the names as variables without causing a syntax error.
+#' @param verbose Set verbosity of potential name_repair.
 #'
 #' @returns A transposed object - keeps object type of `df` input (data.frame or tibble).
 #' @export
@@ -31,7 +36,8 @@
 #'
 #' # renaming id column
 #' tidy_t(df, new_id_colname = "var")
-tidy_t <- function(df, id_col = 1, exclude_cols = NULL, new_id_colname = NULL, reguess_coltypes = FALSE) {
+#' @importFrom rlang .data :=
+tidy_t <- function(df, id_col = 1, exclude_cols = NULL, new_id_colname = NULL, reguess_coltypes = FALSE, name_repair = "unique", verbose = FALSE) {
   checkmate::expect_data_frame(df, null.ok = FALSE)
   checkmate::assert(
     checkmate::check_integerish(id_col, len = 1, any.missing = FALSE, null.ok = FALSE, lower = 1, upper = ncol(df)),
@@ -43,22 +49,29 @@ tidy_t <- function(df, id_col = 1, exclude_cols = NULL, new_id_colname = NULL, r
   )
   checkmate::expect_string(new_id_colname, na.ok = FALSE, min.chars = 1, null.ok = TRUE)
   checkmate::expect_flag(reguess_coltypes)
+  checkmate::expect_choice(name_repair, choices = eval(formals(vctrs::vec_as_names)$repair))
+  checkmate::expect_flag(verbose)
 
   stopifnot("'df' must be a data frame without row names." = !tibble::has_rownames(df))
 
-  if (is.character(id_col)) {
-    id_col <- which(colnames(df) == id_col)
+  if (is.numeric(id_col)) {
+    id_col <- colnames(df)[id_col]
   }
-  if (is.character(exclude_cols)) {
-    exclude_cols <- which(colnames(df) %in% exclude_cols)
+  if (is.numeric(exclude_cols)) {
+    exclude_cols <- colnames(df)[exclude_cols]
   }
   checkmate::expect_disjunct(id_col, exclude_cols, info = "id_col can not part of exclude_cols.")
 
+  if (anyDuplicated(df[[id_col]]) != 0 && name_repair == "minimal") {
+    warning("tidy_t: Duplicated names detected, try using a different 'name_repair' option.")
+  }
+
   trans <- df |>
-    dplyr::select(-dplyr::all_of(colnames(df)[exclude_cols])) |>
-    tibble::column_to_rownames(var = colnames(df)[[id_col]]) |>
+    dplyr::select(-dplyr::all_of(exclude_cols)) |>
+    dplyr::mutate("{id_col}" := vctrs::vec_as_names(names = as.character(.data[[id_col]]), repair = name_repair, quiet = !verbose)) |>
+    tibble::column_to_rownames(var = id_col) |>
     t() |>
-    tibble::as_tibble(rownames = colnames(df)[[id_col]])
+    tibble::as_tibble(rownames = id_col)
 
   if (!is.null(new_id_colname)) {
     colnames(trans)[[1]] <- new_id_colname

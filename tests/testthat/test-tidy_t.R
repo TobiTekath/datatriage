@@ -46,11 +46,19 @@ test_that("id_col selection works", {
   dummy_tbl <- tibble::tibble(x1 = vec1, x2 = vec2)
 
   transposed_df <- tidy_t(dummy_df, id_col = 2)
-  transposed_tbl <- tidy_t(dummy_df, id_col = 2)
+  transposed_tbl <- tidy_t(dummy_tbl, id_col = 2)
   expect_identical(colnames(transposed_df), c("x2", vec2))
   expect_identical(dim(transposed_df), c(ncol(dummy_df) - 1L, nrow(dummy_df) + 1L))
   expect_identical(colnames(transposed_tbl), c("x2", vec2))
-  expect_identical(dim(transposed_tbl), c(ncol(dummy_df) - 1L, nrow(dummy_df) + 1L))
+  expect_identical(dim(transposed_tbl), c(ncol(dummy_tbl) - 1L, nrow(dummy_tbl) + 1L))
+
+  # together with exclude column
+  transposed_df <- tidy_t(dummy_df, id_col = 2, exclude_cols = 1)
+  transposed_tbl <- tidy_t(dummy_tbl, id_col = 2, exclude_cols = 1)
+  expect_identical(colnames(transposed_df), c("x2", vec2))
+  expect_identical(dim(transposed_df), c(ncol(dummy_df) - 2L, nrow(dummy_df) + 1L))
+  expect_identical(colnames(transposed_tbl), c("x2", vec2))
+  expect_identical(dim(transposed_tbl), c(ncol(dummy_tbl) - 2L, nrow(dummy_tbl) + 1L))
 })
 
 test_that("exclude column selection works", {
@@ -91,6 +99,30 @@ test_that("reguess column types works", {
   expect_identical(unname(sapply(transposed, class)), c("character", "numeric", "character", "logical"))
 })
 
+test_that("name repairs works", {
+  vec1 <- c("a", "a", "b", NA)
+  vec2 <- c(NA, "$strange_*'*name^", "c", "c")
+  dummy_df <- data.frame(x1 = vec1, x2 = vec2)
+  dummy_tbl <- tibble::tibble(x1 = vec1, x2 = vec2)
+
+  transposed_df <- tidy_t(dummy_df, name_repair = "unique")
+  expect_identical(anyDuplicated(colnames(transposed_df)), 0L)
+  expect_identical(as.character(transposed_df[1, ]), c("x2", vec2))
+  transposed_df <- tidy_t(dummy_tbl, name_repair = "unique")
+  expect_identical(anyDuplicated(colnames(transposed_df)), 0L)
+  expect_identical(as.character(transposed_df[1, ]), c("x2", vec2))
+
+  # if not repaired, duplicate names cause error
+  expect_error(expect_warning(expect_warning(transposed_df <- tidy_t(dummy_df, name_repair = "minimal"),
+    regexp = "Duplicated names"
+  ), regexp = "non-unique"), regexp = "duplicate")
+
+
+  expect_message(transposed_df <- tidy_t(dummy_df, id_col = 2, name_repair = "universal", verbose = TRUE), regexp = "New names")
+  # check if syntactic names
+  expect_identical(colnames(transposed_df), make.names(colnames(transposed_df)))
+})
+
 
 test_that("argument checks work", {
   dummy_df <- data.frame(1)
@@ -124,6 +156,19 @@ test_that("argument checks work", {
   expect_error(tidy_t(df = dummy_df, id_col = 1, reguess_coltypes = c(TRUE, FALSE)), regexp = "reguess_coltypes", class = "expectation_failure")
   expect_error(tidy_t(df = dummy_df, id_col = 1, reguess_coltypes = NA), regexp = "reguess_coltypes", class = "expectation_failure")
   expect_error(tidy_t(df = dummy_df, id_col = 1, reguess_coltypes = NULL), regexp = "reguess_coltypes", class = "expectation_failure")
+
+  expect_error(tidy_t(df = dummy_df, id_col = 1, name_repair = "invalid_choice"), regexp = "name_repair", class = "expectation_failure")
+  expect_error(tidy_t(df = dummy_df, id_col = 1, name_repair = c("unique", "universal")), regexp = "name_repair", class = "expectation_failure")
+  expect_error(tidy_t(df = dummy_df, id_col = 1, name_repair = NULL), regexp = "name_repair", class = "expectation_failure")
+  expect_error(tidy_t(df = dummy_df, id_col = 1, name_repair = NA), regexp = "name_repair", class = "expectation_failure")
+  expect_error(tidy_t(df = dummy_df, id_col = 1, name_repair = 1), regexp = "name_repair", class = "expectation_failure")
+  expect_error(tidy_t(df = dummy_df, id_col = 1, name_repair = TRUE), regexp = "name_repair", class = "expectation_failure")
+
+  expect_error(tidy_t(df = dummy_df, id_col = 1, verbose = "TRUE"), regexp = "verbose", class = "expectation_failure")
+  expect_error(tidy_t(df = dummy_df, id_col = 1, verbose = 1), regexp = "verbose", class = "expectation_failure")
+  expect_error(tidy_t(df = dummy_df, id_col = 1, verbose = c(TRUE, FALSE)), regexp = "verbose", class = "expectation_failure")
+  expect_error(tidy_t(df = dummy_df, id_col = 1, verbose = NA), regexp = "verbose", class = "expectation_failure")
+  expect_error(tidy_t(df = dummy_df, id_col = 1, verbose = NULL), regexp = "verbose", class = "expectation_failure")
 
   expect_error(tidy_t(df = dummy_df, id_col = 1, exclude_cols = 1), regexp = "exclude_cols", class = "expectation_failure")
 })
