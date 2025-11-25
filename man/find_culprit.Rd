@@ -46,6 +46,7 @@ Find the element(s) in a vector, whose data type potentially deviates from the m
 This function can be used to find the culprit element, which prevents clean data type conversion.
 Utilizes \code{\link[readr:parse_guess]{readr::guess_parser()}} to guess type of every vector element.
 User can specify which data type the vector \code{should_be}, or simply rely on the majority guess.
+By default does not differentiate between double or integer values. Set \code{should_be} to \code{integer} to enforce this differentiation.
 Ties in the majority guess are resolved lexicographically by data type name, i.e. \code{character} > \code{double} > \code{integer} > \code{logical}.
 If \code{should_be} is \code{numeric}, the data type is interpreted as \code{double} for lexicographic sorting.
 }

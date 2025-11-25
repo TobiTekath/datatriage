@@ -5,6 +5,7 @@
 #' This function can be used to find the culprit element, which prevents clean data type conversion.
 #' Utilizes [readr::guess_parser()] to guess type of every vector element.
 #' User can specify which data type the vector `should_be`, or simply rely on the majority guess.
+#' By default does not differentiate between double or integer values. Set `should_be` to `integer` to enforce this differentiation.
 #' Ties in the majority guess are resolved lexicographically by data type name, i.e. `character` > `double` > `integer` > `logical`.
 #' If `should_be` is `numeric`, the data type is interpreted as `double` for lexicographic sorting.
 #'
@@ -43,7 +44,7 @@ find_culprit <- function(vec, should_be = c("majority", "numeric", "double", "in
   }
 
   guess <- vapply(as.character(vec),
-    FUN = function(x) readr::guess_parser(x = x, guess_integer = ifelse(should_be == "numeric", FALSE, TRUE), ...),
+    FUN = function(x) readr::guess_parser(x = x, guess_integer = ifelse(should_be == "integer", TRUE, FALSE), ...),
     FUN.VALUE = character(1)
   )
 

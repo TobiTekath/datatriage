@@ -5,12 +5,14 @@ test_that("culprit identification works", {
   expect_identical(unname(culp), "a")
   culp <- find_culprit(df$logical, verbose = FALSE)
   expect_identical(unname(culp), c("TURE", "1"))
-  culp <- find_culprit(df$int, verbose = FALSE)
-  expect_identical(unname(culp), "2.1")
 
-  # set should_be to numeric for column int -> no culprit
-  culp <- find_culprit(df$int, should_be = "numeric", verbose = FALSE)
+  # by default not differentiation of dbl and int
+  culp <- find_culprit(df$int, verbose = FALSE)
   expect_null(culp)
+
+  # set should_be to integer for column int -> culprit
+  culp <- find_culprit(df$int, should_be = "integer", verbose = FALSE)
+  expect_identical(unname(culp), "2.1")
 
   culp <- find_culprit(df$char, verbose = FALSE)
   expect_identical(unname(culp), "1")
