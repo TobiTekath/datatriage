@@ -98,6 +98,7 @@ names.</p></dd>
     <p>This function can be used to find the culprit element, which prevents clean data type conversion.
 Utilizes <code><a href="https://readr.tidyverse.org/reference/parse_guess.html" class="external-link">readr::guess_parser()</a></code> to guess type of every vector element.
 User can specify which data type the vector <code>should_be</code>, or simply rely on the majority guess.
+By default does not differentiate between double or integer values. Set <code>should_be</code> to <code>integer</code> to enforce this differentiation.
 Ties in the majority guess are resolved lexicographically by data type name, i.e. <code>character</code> &gt; <code>double</code> &gt; <code>integer</code> &gt; <code>logical</code>.
 If <code>should_be</code> is <code>numeric</code>, the data type is interpreted as <code>double</code> for lexicographic sorting.</p>
     </div>

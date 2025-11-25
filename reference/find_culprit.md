@@ -72,11 +72,12 @@ This function can be used to find the culprit element, which prevents
 clean data type conversion. Utilizes
 [`readr::guess_parser()`](https://readr.tidyverse.org/reference/parse_guess.html)
 to guess type of every vector element. User can specify which data type
-the vector `should_be`, or simply rely on the majority guess. Ties in
-the majority guess are resolved lexicographically by data type name,
-i.e. `character` \> `double` \> `integer` \> `logical`. If `should_be`
-is `numeric`, the data type is interpreted as `double` for lexicographic
-sorting.
+the vector `should_be`, or simply rely on the majority guess. By default
+does not differentiate between double or integer values. Set `should_be`
+to `integer` to enforce this differentiation. Ties in the majority guess
+are resolved lexicographically by data type name, i.e. `character` \>
+`double` \> `integer` \> `logical`. If `should_be` is `numeric`, the
+data type is interpreted as `double` for lexicographic sorting.
 
 ## Examples
 
