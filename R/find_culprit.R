@@ -48,6 +48,10 @@ find_culprit <- function(vec, should_be = c("majority", "numeric", "double", "in
     FUN.VALUE = character(1)
   )
 
+  if (na.rm) {
+    guess <- guess[!is.na(names(guess))]
+  }
+
   if (should_be == "majority") {
     should_be <- names(which.max(table(guess)))
     if (verbose) {
@@ -58,9 +62,6 @@ find_culprit <- function(vec, should_be = c("majority", "numeric", "double", "in
   }
 
   culprit <- which(guess != should_be)
-  if (na.rm) {
-    culprit <- culprit[!is.na(names(culprit))]
-  }
   if (return_index) {
     ret <- stats::setNames(culprit, guess[culprit])
   } else {

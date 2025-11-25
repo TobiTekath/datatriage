@@ -22,7 +22,10 @@ test_that("culprit identification works", {
 })
 
 test_that("NA handling works", {
-  df <- data.frame(mixed = c(1, 2, NA, NA, "."))
+  df <- data.frame(
+    mixed = c(1, 2, NA, NA, "."),
+    majority = c("a", NA, NA, NA, "b")
+  )
 
   # NA's are excluded by default - guessing integer
   culp <- find_culprit(df$mixed, verbose = FALSE)
@@ -35,6 +38,13 @@ test_that("NA handling works", {
   # Treat "." like NA - more logical than integer, guessing logical
   culp <- find_culprit(df$mixed, verbose = FALSE, na.rm = FALSE, na = ".")
   expect_identical(unname(culp), c("1", "2"))
+
+  # Do not guess logical, when NA is majority but na.rm = TRUE
+  culp <- find_culprit(df$majority, verbose = FALSE, na.rm = TRUE)
+  expect_null(culp)
+
+  culp <- find_culprit(df$majority, verbose = FALSE, na.rm = FALSE)
+  expect_identical(unname(culp), c("a", "b"))
 })
 
 test_that("Index return works", {
