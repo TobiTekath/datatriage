@@ -1,0 +1,39 @@
+# datatriage
+
+The goal of datatriage is to help users to create reproducible data
+cleaning workflows. It provides functions to automate data type
+validations and detect inconsistencies in data cleaning workflows.
+
+## Installation
+
+You can install the development version of datatriage like so:
+
+``` r
+pak::pak("TobiTekath/datatriage")
+```
+
+## Example
+
+TBD.
+
+# Package index
+
+## All functions
+
+- [`all_decimal_points_to_dot()`](https://tobitekath.github.io/datatriage/reference/all_decimal_points_to_dot.md)
+  : Convert given decimal character to dot
+- [`all_to_character()`](https://tobitekath.github.io/datatriage/reference/all_to_character.md)
+  : Convert all columns to character
+- [`case_modify()`](https://tobitekath.github.io/datatriage/reference/case_modify.md)
+  : A general vectorised switch() that keeps unaffected values
+- [`find_culprit()`](https://tobitekath.github.io/datatriage/reference/find_culprit.md)
+  : Find not-fitting element (culprit) in vector
+- [`reguess_coltypes()`](https://tobitekath.github.io/datatriage/reference/reguess_coltypes.md)
+  : Re-convert character columns in existing data frame
+- [`remove_html()`](https://tobitekath.github.io/datatriage/reference/remove_html.md)
+  : Strip html tags
+- [`suppress_matching()`](https://tobitekath.github.io/datatriage/reference/suppress_matching.md)
+  : Selectively suppress messages, warnings, cat and print
+- [`tidy_t()`](https://tobitekath.github.io/datatriage/reference/tidy_t.md)
+  : Transpose a data.frame or tibble
+
