@@ -10,6 +10,8 @@
 #'
 #' @examples
 #' dummy_df <- data.frame("a" = c(1:3))
+#' dummy_df
+#'
 #' # only replace 3 by 4, keep the rest
 #' dplyr::mutate(dummy_df, a = case_modify(a, 3 ~ 4))
 case_modify <- function(.x, ...) {

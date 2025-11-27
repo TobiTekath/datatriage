@@ -1,5 +1,5 @@
 test_that("decimal point conversion works", {
-  df <- data.frame(x1 = c(1.1, 2.2), x2 = c("1,1", "2,2"))
+  df <- data.frame(x1 = c(1.1, 2.2, 12345.6789), x2 = c("1,1", "2,2", "12345,6789"))
   new_df <- all_decimal_points_to_dot(df)
   expect_identical(df$x1, as.numeric(new_df$x2))
 })
@@ -11,7 +11,7 @@ test_that("using custom decimal point character works", {
 })
 
 test_that("conversion safeguards work", {
-  df <- data.frame(x1 = c("a,1", "1,1a", "a1,1", "1,a", " 1,1", "1,1 "))
+  df <- data.frame(x1 = c("a,1", "1,1a", "a1,1", "1,a", " 1,1", "1,1 ", "123,456.789"))
   new_df <- all_decimal_points_to_dot(df)
   expect_identical(new_df$x1, df$x1)
 })

@@ -20,8 +20,8 @@
 #' @export
 #'
 #' @examples
-#'
 #' df <- data.frame(a = c("x1", "1", "FALSE"), b = c("x2", "2", "TRUE"))
+#' df
 #'
 #' tidy_t(df)
 #'

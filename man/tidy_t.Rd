@@ -44,8 +44,8 @@ Instead of row names, the column names of the transposed object are taken from a
 \cr\strong{Note}: The input \code{df} should \strong{not contain} row names, as they would be discarded.
 }
 \examples{
-
 df <- data.frame(a = c("x1", "1", "FALSE"), b = c("x2", "2", "TRUE"))
+df
 
 tidy_t(df)
 

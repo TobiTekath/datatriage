@@ -9,6 +9,8 @@
 #'
 #' @examples
 #' df <- data.frame(a = c(1, 2, 3), b = c("a", "b", "c"))
+#' df
+#'
 #' all_to_character(df)
 all_to_character <- function(df) {
   checkmate::expect_data_frame(df, null.ok = FALSE)

@@ -17,5 +17,7 @@ Convert all columns of the provided object to \code{character}.
 }
 \examples{
 df <- data.frame(a = c(1, 2, 3), b = c("a", "b", "c"))
+df
+
 all_to_character(df)
 }

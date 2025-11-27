@@ -24,6 +24,8 @@ Has safeguards to only convert numeric-like characters - any non-numeric charact
 }
 \examples{
 df <- data.frame(x1 = c("1,1", "2,2", " 3,3", "4,4 ", "1,1a"))
+df
+
 all_decimal_points_to_dot(df)
 
 # also trim white space

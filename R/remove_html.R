@@ -10,6 +10,8 @@
 #'
 #' @examples
 #' text <- "text with <p> some tags </p>"
+#' text
+#'
 #' remove_html(text)
 remove_html <- function(vec, squish = TRUE) {
   checkmate::expect_character(vec, null.ok = FALSE)

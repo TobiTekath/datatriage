@@ -19,5 +19,7 @@ Strip html tags from vec and potentially \code{\link[stringr:str_trim]{stringr::
 }
 \examples{
 text <- "text with <p> some tags </p>"
+text
+
 remove_html(text)
 }

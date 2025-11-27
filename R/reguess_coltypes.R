@@ -13,9 +13,12 @@
 #' @export
 #'
 #' @examples
-#' df <- data.frame(a = c(1, 2, 3), b = c(TRUE, FALSE, NA), c = factor(c(1, 2, 1)))
-#' char_df <- all_to_character(df)
-#' reguess_coltypes(char_df)
+#' # create data frame of characters
+#' df <- data.frame(a = c(1, 2, 3), b = c(TRUE, FALSE, NA), c = factor(c(1, 2, 1))) |>
+#'   all_to_character()
+#' df
+#'
+#' reguess_coltypes(df)
 #'
 #' # convert column b to numeric if convert_comma_to_dot is set.
 #' df <- data.frame(a = c("a,b", "1,b", "c,0"), b = c("1,1", "1,2", "1,3"))

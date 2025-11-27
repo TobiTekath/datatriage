@@ -14,6 +14,8 @@
 #'
 #' @examples
 #' df <- data.frame(x1 = c("1,1", "2,2", " 3,3", "4,4 ", "1,1a"))
+#' df
+#'
 #' all_decimal_points_to_dot(df)
 #'
 #' # also trim white space
@@ -22,7 +24,7 @@ all_decimal_points_to_dot <- function(df, convert_decimal_character = ",", trim_
   checkmate::expect_data_frame(df, null.ok = FALSE)
   checkmate::expect_string(convert_decimal_character)
 
-  regex <- stringr::str_c("^([0-9+])", stringr::str_escape(convert_decimal_character), "([0-9+])$")
+  regex <- stringr::str_c("^([0-9]+)", stringr::str_escape(convert_decimal_character), "([0-9]+)$")
 
   df <- df |>
     dplyr::mutate(dplyr::across(
