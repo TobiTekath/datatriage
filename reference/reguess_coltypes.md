@@ -79,9 +79,16 @@ changed.
 ## Examples
 
 ``` r
-df <- data.frame(a = c(1, 2, 3), b = c(TRUE, FALSE, NA), c = factor(c(1, 2, 1)))
-char_df <- all_to_character(df)
-reguess_coltypes(char_df)
+# create data frame of characters
+df <- data.frame(a = c(1, 2, 3), b = c(TRUE, FALSE, NA), c = factor(c(1, 2, 1))) |>
+  all_to_character()
+df
+#>   a     b c
+#> 1 1  TRUE 1
+#> 2 2 FALSE 2
+#> 3 3  <NA> 1
+
+reguess_coltypes(df)
 #>   a     b c
 #> 1 1  TRUE 1
 #> 2 2 FALSE 2

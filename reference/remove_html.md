@@ -30,6 +30,9 @@ A character vector without html tags.
 
 ``` r
 text <- "text with <p> some tags </p>"
+text
+#> [1] "text with <p> some tags </p>"
+
 remove_html(text)
 #> [1] "text with some tags"
 ```

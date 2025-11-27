@@ -106,11 +106,13 @@ If <code>should_be</code> is <code>numeric</code>, the data type is interpreted 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">long_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2.2</span>, <span class="st">"4,"</span>, <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">long_data</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1"   "2.2" "4,"  "5"  </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># standard type conversion would convert "4," to NA</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">long_data</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co"># standard type conversion would convert "4," to NA and give a warning</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">long_data</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.0 2.2  NA 5.0</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># better for maximizing information content: find culprit element and treat it appropriately</span></span></span>
 <span class="r-in"><span><span class="fu">find_culprit</span><span class="op">(</span><span class="va">long_data</span>, should_be <span class="op">=</span> <span class="st">"numeric"</span><span class="op">)</span></span></span>

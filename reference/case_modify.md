@@ -42,6 +42,12 @@ A vector with the same size as .x.
 
 ``` r
 dummy_df <- data.frame("a" = c(1:3))
+dummy_df
+#>   a
+#> 1 1
+#> 2 2
+#> 3 3
+
 # only replace 3 by 4, keep the rest
 dplyr::mutate(dummy_df, a = case_modify(a, 3 ~ 4))
 #>   a

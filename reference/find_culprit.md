@@ -83,11 +83,13 @@ data type is interpreted as `double` for lexicographic sorting.
 
 ``` r
 long_data <- c(1, 2.2, "4,", 5)
+long_data
+#> [1] "1"   "2.2" "4,"  "5"  
 
-# standard type conversion would convert "4," to NA
-if (FALSE) { # \dontrun{
-as.numeric(long_data)
-} # }
+# standard type conversion would convert "4," to NA and give a warning
+suppressWarnings(as.numeric(long_data))
+#> [1] 1.0 2.2  NA 5.0
+
 
 # better for maximizing information content: find culprit element and treat it appropriately
 find_culprit(long_data, should_be = "numeric")

@@ -78,6 +78,11 @@ tibble).
 
 ``` r
 df <- data.frame(a = c("x1", "1", "FALSE"), b = c("x2", "2", "TRUE"))
+df
+#>       a    b
+#> 1    x1   x2
+#> 2     1    2
+#> 3 FALSE TRUE
 
 tidy_t(df)
 #>   a x1 1 FALSE
