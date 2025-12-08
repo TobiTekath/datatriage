@@ -27,6 +27,7 @@ Imports:
   stringr,
   tibble,
   tidyselect,
+  purrr,
   vctrs
 URL: https://github.com/TobiTekath/datatriage, https://tobitekath.github.io/datatriage/
 BugReports: https://github.com/TobiTekath/datatriage/issues
