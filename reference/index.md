@@ -12,6 +12,8 @@
   : Find not-fitting element (culprit) in vector
 - [`reguess_coltypes()`](https://tobitekath.github.io/datatriage/reference/reguess_coltypes.md)
   : Re-convert character columns in existing data frame
+- [`relocate_multi()`](https://tobitekath.github.io/datatriage/reference/relocate_multi.md)
+  : Relocate multiple columns
 - [`remove_html()`](https://tobitekath.github.io/datatriage/reference/remove_html.md)
   : Strip html tags
 - [`suppress_matching()`](https://tobitekath.github.io/datatriage/reference/suppress_matching.md)
