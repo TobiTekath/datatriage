@@ -20,3 +20,9 @@
   : Selectively suppress messages, warnings, cat and print
 - [`tidy_t()`](https://tobitekath.github.io/datatriage/reference/tidy_t.md)
   : Transpose a data.frame or tibble
+- [`try_date()`](https://tobitekath.github.io/datatriage/reference/try_date.md)
+  : Try conversion to date representation
+- [`try_dates()`](https://tobitekath.github.io/datatriage/reference/try_dates.md)
+  : Try conversion to date representation
+- [`try_numeric()`](https://tobitekath.github.io/datatriage/reference/try_numeric.md)
+  : Try conversion to numeric
