@@ -1,5 +1,5 @@
 test_that("transposing data.frame works", {
-  vec1 <- c(1, 2, 3)
+  vec1 <- c(2, 3, 1)
   vec2 <- c("a", "b", "c")
   dummy_df <- data.frame(x1 = vec1, x2 = vec2)
 
@@ -16,7 +16,7 @@ test_that("transposing data.frame works", {
 })
 
 test_that("transposing tibble works", {
-  vec1 <- c(1, 2, 3)
+  vec1 <- c(2, 1, 3)
   vec2 <- c("a", "b", "c")
   dummy_df <- tibble::tibble(x1 = vec1, x2 = vec2)
 
