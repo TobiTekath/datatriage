@@ -19,3 +19,10 @@ A logical vector of the same size as \code{df} has rows.
 \description{
 Check rowwise for the provided data.frame columns if a value is trailing.
 }
+\examples{
+df <- data.frame(a = c(1, 2, 3), b = c(2, 3, 2), c = c(3, 3, 3))
+df
+
+# check over all columns rowwise for trailing 3s
+check_trailing_rowwise(df, cols = colnames(df), trail_value = 3)
+}

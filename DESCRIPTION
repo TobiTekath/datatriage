@@ -22,12 +22,14 @@ Depends: R (>= 4.1.0)
 Imports:
   checkmate,
   dplyr,
+  performance,
+  purrr,
   readr,
   rlang,
   stringr,
   tibble,
+  tidyr,
   tidyselect,
-  purrr,
   vctrs
 URL: https://github.com/TobiTekath/datatriage, https://tobitekath.github.io/datatriage/
 BugReports: https://github.com/TobiTekath/datatriage/issues
