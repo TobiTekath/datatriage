@@ -63,7 +63,12 @@ find_culprit <- function(vec, should_be = c("majority", "numeric", "double", "in
 
   culprit <- which(guess != should_be)
   if (return_index) {
-    ret <- stats::setNames(culprit, guess[culprit])
+    if (na.rm) {
+      # get right index if NA has been removed.
+      ret <- stats::setNames(match(names(culprit), vec), guess[culprit])
+    } else {
+      ret <- stats::setNames(culprit, guess[culprit])
+    }
   } else {
     ret <- stats::setNames(names(culprit), guess[culprit])
   }

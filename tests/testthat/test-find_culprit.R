@@ -48,13 +48,19 @@ test_that("NA handling works", {
 })
 
 test_that("Index return works", {
-  df <- data.frame(one = c("a", 1, 2, 3), two = c(TRUE, FALSE, "TURE", 1))
+  df <- data.frame(one = c("a", 1, 2, 3), two = c(TRUE, FALSE, "TURE", 1), na = c(1, 2.5, NA, "a"))
 
   culp <- find_culprit(df$one, return_index = TRUE, verbose = FALSE)
   expect_identical(unname(culp), 1L)
 
   culp <- find_culprit(df$two, return_index = TRUE, verbose = FALSE)
   expect_identical(unname(culp), c(3L, 4L))
+
+  culp <- find_culprit(df$na, na.rm = FALSE, return_index = TRUE, verbose = FALSE)
+  expect_identical(unname(culp), c(3L, 4L))
+
+  culp <- find_culprit(df$na, na.rm = TRUE, return_index = TRUE, verbose = FALSE)
+  expect_identical(unname(culp), 4L)
 })
 
 test_that("argument checks work", {
