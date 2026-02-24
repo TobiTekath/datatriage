@@ -1,5 +1,5 @@
 # Changelog
 
-## datatriage (development version)
+## datatriage 0.1.0
 
 - Initial first release.

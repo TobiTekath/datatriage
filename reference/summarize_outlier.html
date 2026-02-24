@@ -11,7 +11,7 @@ Allows to specify a minimal amount of unique values in vec to perform outlier de
 
     <a class="navbar-brand me-2" href="../index.html">datatriage</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,7 +49,8 @@ Allows to specify a minimal amount of unique values in <code>vec</code> to perfo
 <span>  <span class="va">vec</span>,</span>
 <span>  minimal_unique_values <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"iqr"</span>, <span class="st">"zscore_robust"</span><span class="op">)</span>,</span>
-<span>  threshold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>zscore_robust <span class="op">=</span> <span class="fl">7</span>, iqr <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span>  threshold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>zscore_robust <span class="op">=</span> <span class="fl">7</span>, iqr <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>  sort <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -79,6 +80,10 @@ considered as outlier. If <code>NULL</code>, default values will be used (see
 'Details'). If a numeric value is given, it will be used as the threshold for
 any of the method run. For EFA/PCA/Omega, indicates the threshold for
 correlation of residuals (by default, 0.05).</p></dd>
+
+
+<dt id="arg-sort">sort<a class="anchor" aria-label="anchor" href="#arg-sort"></a></dt>
+<dd><p>Sort the outlier values? Can be FALSE for no sorting, TRUE or "descending" for descending order, or "ascending" for ascending order.</p></dd>
 
 </dl></div>
     <div class="section level2">
