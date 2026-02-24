@@ -1,6 +1,6 @@
 Package: datatriage
 Title: Create Reproducible Data Cleaning Workflows
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
     c(person(given = "Tobias", family = "Tekath", role = c("aut", "cre"), email = "tobias.tekath@wwu.de", comment = c(ORCID = "0000-0002-9315-5452")))
 Description: Collection of functions to automate data type validations 
