@@ -7,8 +7,10 @@ test_that("outlier summary creation works", {
   res <- summarize_outlier(vec)
   expect_length(res, 1)
   expect_identical(res, stringr::str_flatten_comma(sort(shift_norm, decreasing = TRUE)))
+})
 
-  # minimal unique threshold works
+
+test_that("minimal unique threshold works", {
   vec <- c(rep(1, 100), rep(990:999, 2))
 
   res <- summarize_outlier(vec, minimal_unique_values = length(unique(vec)) + 1)
@@ -16,6 +18,20 @@ test_that("outlier summary creation works", {
   res <- summarize_outlier(vec, minimal_unique_values = length(unique(vec)))
   expect_failure(expect_identical(res, ""))
 })
+
+test_that("sorting works", {
+  vec <- c(rep(1, 100), 999, 997, 998)
+
+  res <- summarize_outlier(vec, minimal_unique_values = 1, sort = FALSE)
+  expect_identical(res, "999, 997, 998")
+  res <- summarize_outlier(vec, minimal_unique_values = 1, sort = TRUE)
+  expect_identical(res, "999, 998, 997")
+  res <- summarize_outlier(vec, minimal_unique_values = 1, sort = "descending")
+  expect_identical(res, "999, 998, 997")
+  res <- summarize_outlier(vec, minimal_unique_values = 1, sort = "ascending")
+  expect_identical(res, "997, 998, 999")
+})
+
 
 test_that("argument checks work", {
   vec <- c(1:10, 999)
@@ -44,4 +60,10 @@ test_that("argument checks work", {
   expect_error(summarize_outlier(vec = vec, threshold = list(1)), regexp = "'threshold'", class = "expectation_failure")
   expect_error(summarize_outlier(vec = vec, threshold = list("iqr" = "text")), regexp = "'threshold'", class = "expectation_failure")
   expect_error(summarize_outlier(vec = vec, method = "iqr", threshold = list("iqr" = 1, "z-score" = 2)), regexp = "'threshold'", class = "expectation_failure")
+
+  expect_error(summarize_outlier(vec = vec, sort = 1), regexp = "sort")
+  expect_error(summarize_outlier(vec = vec, sort = NA), regexp = "sort")
+  expect_error(summarize_outlier(vec = vec, sort = "invalid_option"), regexp = "sort")
+  expect_error(summarize_outlier(vec = vec, sort = NULL), regexp = "sort")
+  expect_error(summarize_outlier(vec = vec, sort = c(TRUE, FALSE)), regexp = "sort")
 })

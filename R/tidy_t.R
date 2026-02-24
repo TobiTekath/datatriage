@@ -41,11 +41,13 @@ tidy_t <- function(df, id_col = 1, exclude_cols = NULL, new_id_colname = NULL, r
   checkmate::expect_data_frame(df, null.ok = FALSE)
   checkmate::assert(
     checkmate::check_integerish(id_col, len = 1, any.missing = FALSE, null.ok = FALSE, lower = 1, upper = ncol(df)),
-    checkmate::check_choice(id_col, choices = colnames(df), null.ok = FALSE)
+    checkmate::check_choice(id_col, choices = colnames(df), null.ok = FALSE),
+    combine = "or"
   )
   checkmate::assert(
     checkmate::check_integerish(exclude_cols, any.missing = FALSE, null.ok = TRUE, lower = 1, upper = ncol(df)),
-    checkmate::check_subset(exclude_cols, choices = colnames(df), empty.ok = FALSE)
+    checkmate::check_subset(exclude_cols, choices = colnames(df), empty.ok = FALSE),
+    combine = "or"
   )
   checkmate::expect_string(new_id_colname, na.ok = FALSE, min.chars = 1, null.ok = TRUE)
   checkmate::expect_flag(reguess_coltypes)

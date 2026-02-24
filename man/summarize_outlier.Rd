@@ -8,7 +8,8 @@ summarize_outlier(
   vec,
   minimal_unique_values = 10,
   method = c("iqr", "zscore_robust"),
-  threshold = list(zscore_robust = 7, iqr = 5)
+  threshold = list(zscore_robust = 7, iqr = 5),
+  sort = TRUE
 )
 }
 \arguments{
@@ -27,6 +28,8 @@ considered as outlier. If \code{NULL}, default values will be used (see
 'Details'). If a numeric value is given, it will be used as the threshold for
 any of the method run. For EFA/PCA/Omega, indicates the threshold for
 correlation of residuals (by default, 0.05).}
+
+\item{sort}{Sort the outlier values? Can be FALSE for no sorting, TRUE or "descending" for descending order, or "ascending" for ascending order.}
 }
 \value{
 A summary string of outliers, an empty string if not outliers where detected.

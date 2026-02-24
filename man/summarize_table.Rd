@@ -7,15 +7,18 @@
 summarize_table(
   df,
   custom_funs = list(),
-  find_culprits = TRUE,
-  find_outliers = TRUE,
+  base_summaries = TRUE,
+  find_culprits = FALSE,
+  find_outliers = FALSE,
   find_outlier_opts = list()
 )
 }
 \arguments{
 \item{df}{A 'data.frame' of 'tibble'.}
 
-\item{custom_funs}{A named list of custom summary functions.}
+\item{custom_funs}{A named list of custom summary functions. Can use formula style or proper functions.}
+
+\item{base_summaries}{Perform basic summary functions? (see dsetails)}
 
 \item{find_culprits}{Shall culprit detection be performed via \code{\link[=find_culprit]{find_culprit()}}?}
 
@@ -28,9 +31,39 @@ A summary tibble with as many rows as \code{df} has columns.
 }
 \description{
 Summarize metric for every column in \code{df}.
-Collects basic metrics, but can also be extend by custom summary functions (\code{custom_funs}).
+Collects basic summary metrics, but can also be extend by custom summary functions (\code{custom_funs}).
 Optionally detects \link[=find_culprit]{culprits} or \link[=summarize_outlier]{outliers}.
 }
+\details{
+Basic summary metrics are:
+\itemize{
+\item type: Column class
+\item n_observed: # of non-NA values
+\item n_unique: # of unique values (without NA)
+\item min: The minimum of the variable. Is lexicographic for character columns.
+\item max: The maximum of the variable. Is lexicographic for character columns.
+}
+}
 \examples{
-# TODO
+df <- data.frame(a = c(1L, 2L, 3L), b = c("a", "b", "c"), c = c(TRUE, FALSE, NA))
+df
+
+# summarize basic metrics
+summarize_table(df)
+
+# add censored column
+df$censored <- c("<5", "7", ">10")
+df
+
+# add custom censored counting metric
+summarize_table(df, custom_funs = list(n_censored = ~ length(grep("<|>", .x))))
+
+# has build-in function to also summarize culprits and outliers
+df <- data.frame(out = c(rep(1, 10), 998, 999), culp = c(rep(1, 10), "a", "b"))
+df
+
+summarize_table(df,
+  base_summaries = FALSE, find_culprits = TRUE,
+  find_outliers = TRUE, find_outlier_opts = list(minimal_unique_values = 1)
+)
 }
