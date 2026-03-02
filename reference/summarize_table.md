@@ -33,7 +33,7 @@ summarize_table(
 
 - base_summaries:
 
-  Perform basic summary functions? (see dsetails)
+  Perform basic summary functions? (see details)
 
 - find_culprits:
 

@@ -12,6 +12,8 @@
   : A general vectorised switch() that keeps unaffected values
 - [`case_when_paste()`](https://tobitekath.github.io/datatriage/reference/case_when_paste.md)
   : case_when variant that pastes results of matched formulas.
+- [`check_one_hot()`](https://tobitekath.github.io/datatriage/reference/check_one_hot.md)
+  : Check one-hot encoding
 - [`check_trailing()`](https://tobitekath.github.io/datatriage/reference/check_trailing.md)
   : Check for trailing elements
 - [`check_trailing_rowwise()`](https://tobitekath.github.io/datatriage/reference/check_trailing_rowwise.md)

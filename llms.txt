@@ -1,8 +1,10 @@
 # datatriage
 
-The goal of datatriage is to help users to create reproducible data
-cleaning workflows. It provides functions to automate data type
-validation and detect inconsistencies in data cleaning workflows.
+Datatriage is a collection of functions to automate tabular data
+formatting, type validation and detection of inconsistencies for data
+cleaning workflows. It supports identifying values that do not match
+their expected data type, helping to quickly locate and resolve data
+quality issues.
 
 ## Installation
 
@@ -34,6 +36,8 @@ TBD.
   : A general vectorised switch() that keeps unaffected values
 - [`case_when_paste()`](https://tobitekath.github.io/datatriage/reference/case_when_paste.md)
   : case_when variant that pastes results of matched formulas.
+- [`check_one_hot()`](https://tobitekath.github.io/datatriage/reference/check_one_hot.md)
+  : Check one-hot encoding
 - [`check_trailing()`](https://tobitekath.github.io/datatriage/reference/check_trailing.md)
   : Check for trailing elements
 - [`check_trailing_rowwise()`](https://tobitekath.github.io/datatriage/reference/check_trailing_rowwise.md)
