@@ -1,12 +1,13 @@
 Package: datatriage
 Title: Create Reproducible Data Cleaning Workflows
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     c(person(given = "Tobias", family = "Tekath", role = c("aut", "cre"), email = "tobias.tekath@wwu.de", comment = c(ORCID = "0000-0002-9315-5452")))
-Description: Collection of functions to automate data type validations 
-    and detection of inconsistencies in data cleaning workflows.
-    Identifies values that do not match their expected data type, 
-    helping users quickly locate and resolve data quality issues.
+Description: Collection of functions to automate tabular data 
+    formatting, type validation and detection of inconsistencies 
+    for data cleaning workflows. Identifies values that do not 
+    match their expected data type, helping users to quickly 
+    locate and resolve data quality issues.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

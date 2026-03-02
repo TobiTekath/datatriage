@@ -18,7 +18,7 @@ summarize_table(
 
 \item{custom_funs}{A named list of custom summary functions. Can use formula style or proper functions.}
 
-\item{base_summaries}{Perform basic summary functions? (see dsetails)}
+\item{base_summaries}{Perform basic summary functions? (see details)}
 
 \item{find_culprits}{Shall culprit detection be performed via \code{\link[=find_culprit]{find_culprit()}}?}
 

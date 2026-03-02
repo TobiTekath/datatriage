@@ -13,7 +13,7 @@
 #'
 #' @param df A 'data.frame' of 'tibble'.
 #' @param custom_funs A named list of custom summary functions. Can use formula style or proper functions.
-#' @param base_summaries Perform basic summary functions? (see dsetails)
+#' @param base_summaries Perform basic summary functions? (see details)
 #' @param find_culprits Shall culprit detection be performed via [find_culprit()]?
 #' @param find_outliers Shall outlier detection be performed via [summarize_outlier()]?
 #' @param find_outlier_opts If `find_outliers`, specify a named list of non-default options for the [summarize_outlier()] call.
