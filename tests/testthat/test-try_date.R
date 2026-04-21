@@ -11,6 +11,9 @@ test_that("potential date conversion works", {
   # UNIX time
   expect_identical(try_date(1309867200, origin = "unix"), date_string)
 
+  # string representation
+  expect_identical(try_date(date_string, return_character = FALSE), as.Date(date_string))
+
   # perform no conversion here
   expect_identical(try_date("invalid"), "invalid")
   expect_identical(try_date(NA), NA)

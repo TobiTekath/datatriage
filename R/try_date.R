@@ -62,6 +62,14 @@ try_date <- function(x, origin = c("excel", "excel_off1", "excel_1904", "unix"),
     } else {
       test <- as.Date(num_x, origin = origin_date)
     }
+  } else if(is.character(num_x)){
+    test <- try(as.Date(num_x, "%Y-%m-%d"), silent = TRUE)
+    if(is.na(test)){
+      return(x)
+    }
+  } else {
+    return(x)
+  }
 
     if (!is.null(min_date)) {
       min_date <- as.Date(min_date, "%Y-%m-%d")
@@ -80,7 +88,4 @@ try_date <- function(x, origin = c("excel", "excel_off1", "excel_1904", "unix"),
     } else {
       return(test)
     }
-  } else {
-    return(x)
-  }
 }
