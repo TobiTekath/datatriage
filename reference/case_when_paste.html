@@ -11,7 +11,7 @@ Drops NA results before pasting - NA should only be supplied in .default if nece
 
     <a class="navbar-brand me-2" href="../index.html">datatriage</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,29 +56,29 @@ Drops <code>NA</code> results before pasting - <code>NA</code> should only be su
 <dd><p>&lt;<code><a href="https://rlang.r-lib.org/reference/dyn-dots.html" class="external-link">dynamic-dots</a></code>&gt; A sequence of two-sided
 formulas. The left hand side (LHS) determines which values match this case.
 The right hand side (RHS) provides the replacement value.</p>
-<p>The LHS inputs must evaluate to logical vectors.</p>
-<p>The RHS inputs will be coerced to their common type.</p>
-<p>All inputs will be recycled to their common size. That said, we encourage
-all LHS inputs to be the same size. Recycling is mainly useful for RHS
-inputs, where you might supply a size 1 input that will be recycled to the
-size of the LHS inputs.</p>
-<p><code>NULL</code> inputs are ignored.</p></dd>
+<p>For <code>case_when()</code>:</p><ul><li><p>The LHS inputs must be logical vectors. For backwards compatibility,
+scalars are <a href="https://vctrs.r-lib.org/reference/theory-faq-recycling.html" class="external-link">recycled</a>, but we no longer
+recommend supplying scalars.</p></li>
+<li><p>The RHS inputs will be <a href="https://vctrs.r-lib.org/reference/theory-faq-coercion.html" class="external-link">cast</a> to their common
+type, and will be <a href="https://vctrs.r-lib.org/reference/theory-faq-recycling.html" class="external-link">recycled</a> to the common
+size of the LHS inputs.</p></li>
+</ul><p>For <code>replace_when()</code>:</p><ul><li><p>The LHS inputs must be logical vectors the same size as <code>x</code>.</p></li>
+<li><p>The RHS inputs will be <a href="https://vctrs.r-lib.org/reference/theory-faq-coercion.html" class="external-link">cast</a> to the type of
+<code>x</code> and <a href="https://vctrs.r-lib.org/reference/theory-faq-recycling.html" class="external-link">recycled</a> to the size of <code>x</code>.</p></li>
+</ul><p><code>NULL</code> inputs are ignored.</p></dd>
 
 
 <dt id="arg--default">.default<a class="anchor" aria-label="anchor" href="#arg--default"></a></dt>
 <dd><p>The value used when all of the LHS inputs return either
-<code>FALSE</code> or <code>NA</code>.</p>
-<p><code>.default</code> must be size 1 or the same size as the common size computed
-from <code>...</code>.</p>
-<p><code>.default</code> participates in the computation of the common type with the RHS
-inputs.</p>
-<p><code>NA</code> values in the LHS conditions are treated like <code>FALSE</code>, meaning that
+<code>FALSE</code> or <code>NA</code>.</p><ul><li><p>If <code>NULL</code>, the default, a missing value will be used.</p></li>
+<li><p>If provided, <code>.default</code> will follow the same type and size rules as the
+RHS inputs.</p></li>
+</ul><p><code>NA</code> values in the LHS conditions are treated like <code>FALSE</code>, meaning that
 the result at those locations will be assigned the <code>.default</code> value. To
 handle missing values in the conditions differently, you must explicitly
 catch them with another condition before they fall through to the
 <code>.default</code>. This typically involves some variation of <code>is.na(x) ~ value</code>
-tailored to your usage of <code>case_when()</code>.</p>
-<p>If <code>NULL</code>, the default, a missing value will be used.</p></dd>
+tailored to your usage of <code>case_when()</code>.</p></dd>
 
 
 <dt id="arg--sep">.sep<a class="anchor" aria-label="anchor" href="#arg--sep"></a></dt>

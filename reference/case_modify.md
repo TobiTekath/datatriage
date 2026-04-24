@@ -3,7 +3,7 @@
 A convenience wrapper around
 [`dplyr::case_match()`](https://dplyr.tidyverse.org/reference/case_match.html),
 with `.default` set to the input parameter `.x` (i.e. keeping values
-unaffected by any switch statements as they are)
+unaffected by any switch statements as they are). See **Warning** below.
 
 ## Usage
 
@@ -37,6 +37,16 @@ case_modify(.x, ...)
 ## Value
 
 A vector with the same size as .x.
+
+## Details
+
+**Warning** This function was only useful before release of dplyr
+1.2.0 - since then
+[`dplyr::case_match()`](https://dplyr.tidyverse.org/reference/case_match.html)
+has been deprecated and the whole recode and replace system overhauled.
+Use
+[`dplyr::replace_values()`](https://dplyr.tidyverse.org/reference/recode-and-replace-values.html)
+as a direct substitute of this function.
 
 ## Examples
 

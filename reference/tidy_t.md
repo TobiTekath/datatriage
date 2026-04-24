@@ -2,9 +2,7 @@
 
 Allow transposing a data.frame or tibble in a "tidy" way. Instead of row
 names, the column names of the transposed object are taken from a
-specified `id_col`.  
-**Note**: The input `df` should **not contain** row names, as they would
-be discarded.
+specified `id_col`.
 
 ## Usage
 
@@ -29,7 +27,8 @@ tidy_t(
 - id_col:
 
   Which column of `df` shall be used as new column names? Can be either
-  an index or a column name.
+  an index or a column name. If `0` is supplied, a new temporary column
+  is created to transpose on.
 
 - exclude_cols:
 
@@ -50,8 +49,8 @@ tidy_t(
 
 - name_repair:
 
-  Choose strategy to potentially repair 'id_col', e.g. for uniqueness.
-  Is passed on to
+  Choose strategy to potentially repair values in 'id_col' as they
+  become the new column names. Is passed on to
   [`vctrs::vec_as_names()`](https://vctrs.r-lib.org/reference/vec_as_names.html),
   supporting among else the following strategies:
 
@@ -73,6 +72,12 @@ tidy_t(
 
 A transposed object - keeps object type of `df` input (data.frame or
 tibble).
+
+## Details
+
+  
+**Note**: The input `df` should **not contain** row names, as they would
+be discarded.
 
 ## Examples
 
@@ -97,6 +102,12 @@ tidy_t(df, reguess_coltypes = TRUE)
 tidy_t(df, id_col = "b")
 #>   b x2 2  TRUE
 #> 1 a x1 1 FALSE
+
+# creating a new column as id column
+tidy_t(df, id_col = 0)
+#>   trans_col x1 x2    x3
+#> 1         a x1  1 FALSE
+#> 2         b x2  2  TRUE
 
 # excluding columns
 tidy_t(df, exclude_cols = "b")

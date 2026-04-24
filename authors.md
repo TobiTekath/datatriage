@@ -11,13 +11,13 @@ Source:
 [`DESCRIPTION`](https://github.com/TobiTekath/datatriage/blob/master/DESCRIPTION)
 
 Tekath T (2026). *datatriage: Create Reproducible Data Cleaning
-Workflows*. R package version 0.1.1,
+Workflows*. R package version 0.1.2,
 <https://github.com/TobiTekath/datatriage>.
 
     @Manual{,
       title = {datatriage: Create Reproducible Data Cleaning Workflows},
       author = {Tobias Tekath},
       year = {2026},
-      note = {R package version 0.1.1},
+      note = {R package version 0.1.2},
       url = {https://github.com/TobiTekath/datatriage},
     }
