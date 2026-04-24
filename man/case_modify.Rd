@@ -26,7 +26,12 @@ The RHS inputs will be coerced to their common type. Each RHS input will be
 A vector with the same size as .x.
 }
 \description{
-A convenience wrapper around \code{\link[dplyr:case_match]{dplyr::case_match()}}, with \code{.default} set to the input parameter \code{.x} (i.e. keeping values unaffected by any switch statements as they are)
+A convenience wrapper around \code{\link[dplyr:case_match]{dplyr::case_match()}}, with \code{.default} set to the input parameter \code{.x} (i.e. keeping values unaffected by any switch statements as they are). See \strong{Warning} below.
+}
+\details{
+\strong{Warning}
+This function was only useful before release of dplyr 1.2.0 - since then \code{\link[dplyr:case_match]{dplyr::case_match()}} has been deprecated and the whole recode and replace system overhauled.
+Use \code{\link[dplyr:recode-and-replace-values]{dplyr::replace_values()}} as a direct substitute of this function.
 }
 \examples{
 dummy_df <- data.frame("a" = c(1:3))

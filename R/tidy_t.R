@@ -2,15 +2,17 @@
 #'
 #' Allow transposing a data.frame or tibble in a "tidy" way.
 #' Instead of row names, the column names of the transposed object are taken from a specified `id_col`.
+#'
 #' \cr**Note**: The input `df` should **not contain** row names, as they would be discarded.
 #'
 #' @param df The to-be-transposed data.frame or tibble.
-#' @param id_col Which column of `df` shall be used as new column names? Can be either an index or a column name.
+#' @param id_col Which column of `df` shall be used as new column names? Can be either an index or a column name. If `0` is supplied, a new temporary column is created to transpose on.
 #' @param exclude_cols Exclude specified columns before transposing. Can be either one or multiple indices or a column names, or `NULL`.
 #' @param new_id_colname Rename the first column of the transposed object. If `NULL`, carry over the selected `id_col` column name.
 #' @param reguess_coltypes Shall a re-guessing of column types be performed after transposing?
 #' Allows to correctly retrieve e.g. numeric or logical columns by utilizing [reguess_coltypes()].
-#' @param name_repair Choose strategy to potentially repair 'id_col', e.g. for uniqueness. Is passed on to [vctrs::vec_as_names()], supporting among else the following strategies:
+#' @param name_repair Choose strategy to potentially repair values in 'id_col' as they become the new column names.
+#' Is passed on to [vctrs::vec_as_names()], supporting among else the following strategies:
 #' * "minimal": No name repair or checks, beyond basic existence of names and replacing NA's.
 #' * "unique": Make sure names are unique and not empty. A suffix is appended to duplicate names to make them unique.
 #' * "universal": Make the names unique and syntactic, meaning that you can safely use the names as variables without causing a syntax error.
@@ -31,6 +33,9 @@
 #' # using second column as id column
 #' tidy_t(df, id_col = "b")
 #'
+#' # creating a new column as id column
+#' tidy_t(df, id_col = 0)
+#'
 #' # excluding columns
 #' tidy_t(df, exclude_cols = "b")
 #'
@@ -40,7 +45,7 @@
 tidy_t <- function(df, id_col = 1, exclude_cols = NULL, new_id_colname = NULL, reguess_coltypes = FALSE, name_repair = "unique", verbose = FALSE) {
   checkmate::expect_data_frame(df, null.ok = FALSE)
   checkmate::assert(
-    checkmate::check_integerish(id_col, len = 1, any.missing = FALSE, null.ok = FALSE, lower = 1, upper = ncol(df)),
+    checkmate::check_integerish(id_col, len = 1, any.missing = FALSE, null.ok = FALSE, lower = 0, upper = ncol(df)),
     checkmate::check_choice(id_col, choices = colnames(df), null.ok = FALSE),
     combine = "or"
   )
@@ -56,7 +61,13 @@ tidy_t <- function(df, id_col = 1, exclude_cols = NULL, new_id_colname = NULL, r
 
   stopifnot("'df' must be a data frame without row names." = !tibble::has_rownames(df))
 
-  if (is.numeric(id_col)) {
+  if (id_col == 0) {
+    # ensure temporary name is unique
+    id_col <- make.unique(c(colnames(df), "trans_col"))
+    id_col <- id_col[length(id_col)]
+    df <- df |>
+      dplyr::mutate("{id_col}" := stringr::str_c("x", seq_len(nrow(df))))
+  } else if (is.numeric(id_col)) {
     id_col <- colnames(df)[id_col]
   }
   if (is.numeric(exclude_cols)) {

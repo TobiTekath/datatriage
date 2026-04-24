@@ -17,7 +17,7 @@ tidy_t(
 \arguments{
 \item{df}{The to-be-transposed data.frame or tibble.}
 
-\item{id_col}{Which column of \code{df} shall be used as new column names? Can be either an index or a column name.}
+\item{id_col}{Which column of \code{df} shall be used as new column names? Can be either an index or a column name. If \code{0} is supplied, a new temporary column is created to transpose on.}
 
 \item{exclude_cols}{Exclude specified columns before transposing. Can be either one or multiple indices or a column names, or \code{NULL}.}
 
@@ -26,7 +26,8 @@ tidy_t(
 \item{reguess_coltypes}{Shall a re-guessing of column types be performed after transposing?
 Allows to correctly retrieve e.g. numeric or logical columns by utilizing \code{\link[=reguess_coltypes]{reguess_coltypes()}}.}
 
-\item{name_repair}{Choose strategy to potentially repair 'id_col', e.g. for uniqueness. Is passed on to \code{\link[vctrs:vec_as_names]{vctrs::vec_as_names()}}, supporting among else the following strategies:
+\item{name_repair}{Choose strategy to potentially repair values in 'id_col' as they become the new column names.
+Is passed on to \code{\link[vctrs:vec_as_names]{vctrs::vec_as_names()}}, supporting among else the following strategies:
 \itemize{
 \item "minimal": No name repair or checks, beyond basic existence of names and replacing NA's.
 \item "unique": Make sure names are unique and not empty. A suffix is appended to duplicate names to make them unique.
@@ -41,6 +42,8 @@ A transposed object - keeps object type of \code{df} input (data.frame or tibble
 \description{
 Allow transposing a data.frame or tibble in a "tidy" way.
 Instead of row names, the column names of the transposed object are taken from a specified \code{id_col}.
+}
+\details{
 \cr\strong{Note}: The input \code{df} should \strong{not contain} row names, as they would be discarded.
 }
 \examples{
@@ -54,6 +57,9 @@ tidy_t(df, reguess_coltypes = TRUE)
 
 # using second column as id column
 tidy_t(df, id_col = "b")
+
+# creating a new column as id column
+tidy_t(df, id_col = 0)
 
 # excluding columns
 tidy_t(df, exclude_cols = "b")

@@ -59,6 +59,18 @@ test_that("id_col selection works", {
   expect_identical(dim(transposed_df), c(ncol(dummy_df) - 2L, nrow(dummy_df) + 1L))
   expect_identical(colnames(transposed_tbl), c("x2", vec2))
   expect_identical(dim(transposed_tbl), c(ncol(dummy_tbl) - 2L, nrow(dummy_tbl) + 1L))
+
+  # add pseudo id_col to transpose on
+  transposed_df <- tidy_t(dummy_df, id_col = 0)
+  transposed_tbl <- tidy_t(dummy_tbl, id_col = 0)
+  expect_identical(dim(transposed_df), c(ncol(dummy_df), nrow(dummy_df) + 1L))
+  expect_true("trans_col" %in% colnames(transposed_df))
+  expect_identical(as.character(transposed_df[1, ]), c(colnames(dummy_df)[1], dummy_df[, 1]))
+  expect_identical(as.character(transposed_df[2, ]), c(colnames(dummy_df)[2], dummy_df[, 2]))
+  expect_identical(dim(transposed_tbl), c(ncol(dummy_tbl), nrow(dummy_tbl) + 1L))
+  expect_true("trans_col" %in% colnames(transposed_tbl))
+  expect_identical(as.character(transposed_tbl[1, ]), c(colnames(dummy_tbl)[1], dummy_tbl[[1]]))
+  expect_identical(as.character(transposed_tbl[2, ]), c(colnames(dummy_tbl)[2], dummy_tbl[[2]]))
 })
 
 test_that("exclude column selection works", {
@@ -85,6 +97,12 @@ test_that("specifying new column name works", {
   transposed_tbl <- tidy_t(dummy_df, new_id_colname = "test")
   expect_identical(colnames(transposed_df), c("test", vec1))
   expect_identical(colnames(transposed_tbl), c("test", vec1))
+
+  # with newly added column
+  transposed_df <- tidy_t(dummy_df, id_col = 0, new_id_colname = "test")
+  transposed_tbl <- tidy_t(dummy_df, id_col = 0, new_id_colname = "test")
+  expect_true("test" %in% colnames(transposed_df))
+  expect_true("test" %in% colnames(transposed_tbl))
 })
 
 
