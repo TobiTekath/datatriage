@@ -31,6 +31,7 @@ If the trailing value does not occur in the vector, returns `TRUE`.
 ## Examples
 
 ``` r
+
 # 3 is trailing
 vec <- c(1, 2, 3, 3, 3)
 check_trailing(vec, trail_value = 3)

@@ -8,7 +8,8 @@ from the majority data type or a specified one.
 ``` r
 find_culprit(
   vec,
-  should_be = c("majority", "numeric", "double", "integer", "character", "logical"),
+  should_be = c("majority", "numeric", "double", "integer", "character", "logical",
+    "Date", "hms", "POSIXct"),
   return_index = FALSE,
   na.rm = TRUE,
   verbose = TRUE,
@@ -44,7 +45,7 @@ find_culprit(
 - ...:
 
   Arguments passed on to
-  [`readr::guess_parser`](https://readr.tidyverse.org/reference/parse_guess.html)
+  [`minty::parse_guess`](http://gesistsa.github.io/minty/reference/parse_guess.md)
 
   `na`
 
@@ -57,9 +58,23 @@ find_culprit(
 
   :   The locale controls defaults that vary from place to place. The
       default locale is US-centric (like R), but you can use
-      [`locale()`](https://readr.tidyverse.org/reference/locale.html) to
-      create your own locale that controls things like the default time
-      zone, encoding, decimal mark, big mark, and day/month names.
+      [`locale()`](http://gesistsa.github.io/minty/reference/locale.md)
+      to create your own locale that controls things like the default
+      time zone, encoding, decimal mark, big mark, and day/month names.
+
+  `trim_ws`
+
+  :   Should leading and trailing whitespace (ASCII spaces and tabs) be
+      trimmed from each field before parsing it?
+
+  `guess_max`
+
+  :   Maximum number of data rows to use for guessing column types.
+      `NA`: uses all data.
+
+  `.return_problems`
+
+  :   Whether to hide the `problems` tibble from the output
 
 ## Value
 
@@ -70,14 +85,15 @@ A named vector, with either the element values (default) or their index
 
 This function can be used to find the culprit element, which prevents
 clean data type conversion. Utilizes
-[`readr::guess_parser()`](https://readr.tidyverse.org/reference/parse_guess.html)
+[`minty::parse_guess()`](http://gesistsa.github.io/minty/reference/parse_guess.md)
 to guess type of every vector element. User can specify which data type
 the vector `should_be`, or simply rely on the majority guess. By default
 does not differentiate between double or integer values. Set `should_be`
 to `integer` to enforce this differentiation. Ties in the majority guess
 are resolved lexicographically by data type name, i.e. `character` \>
 `double` \> `integer` \> `logical`. If `should_be` is `numeric`, the
-data type is interpreted as `double` for lexicographic sorting.
+data type is interpreted as `double` for lexicographic sorting. Flags
+invalid `Date`, `hms`, or `POSIXct` values.
 
 ## Examples
 
@@ -93,8 +109,7 @@ suppressWarnings(as.numeric(long_data))
 
 # better for maximizing information content: find culprit element and treat it appropriately
 find_culprit(long_data, should_be = "numeric")
-#> number 
-#>   "4," 
+#> NULL
 as.numeric(gsub(",", "", long_data))
 #> [1] 1.0 2.2 4.0 5.0
 ```

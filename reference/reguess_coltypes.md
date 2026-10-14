@@ -3,7 +3,7 @@
 Convenience wrapper around
 [`all_decimal_points_to_dot()`](https://tobitekath.github.io/datatriage/reference/all_decimal_points_to_dot.md)
 and
-[`readr::type_convert()`](https://readr.tidyverse.org/reference/type_convert.html).
+[`minty::type_convert()`](http://gesistsa.github.io/minty/reference/type_convert.md).
 Optionally converts numeric-like characters with a comma as decimal
 point (as used in e.g. Germany) to dots, then performs a re-guessing of
 column types of all character columns.
@@ -29,20 +29,19 @@ reguess_coltypes(df, convert_comma_to_dot = FALSE, silent = TRUE, ...)
 - silent:
 
   Suppress column specification message from
-  [`readr::type_convert()`](https://readr.tidyverse.org/reference/type_convert.html)
+  [`minty::type_convert()`](http://gesistsa.github.io/minty/reference/type_convert.md)
   column type guessing.
 
 - ...:
 
   Arguments passed on to
-  [`readr::type_convert`](https://readr.tidyverse.org/reference/type_convert.html)
+  [`minty::type_convert`](http://gesistsa.github.io/minty/reference/type_convert.md)
 
   `col_types`
 
   :   One of `NULL`, a
-      [`cols()`](https://readr.tidyverse.org/reference/cols.html)
-      specification, or a string. See `vignette("readr")` for more
-      details.
+      [`cols()`](http://gesistsa.github.io/minty/reference/cols.md)
+      specification, or a string.
 
       If `NULL`, column types will be imputed using all rows.
 
@@ -62,14 +61,23 @@ reguess_coltypes(df, convert_comma_to_dot = FALSE, silent = TRUE, ...)
 
   :   The locale controls defaults that vary from place to place. The
       default locale is US-centric (like R), but you can use
-      [`locale()`](https://readr.tidyverse.org/reference/locale.html) to
-      create your own locale that controls things like the default time
-      zone, encoding, decimal mark, big mark, and day/month names.
+      [`locale()`](http://gesistsa.github.io/minty/reference/locale.md)
+      to create your own locale that controls things like the default
+      time zone, encoding, decimal mark, big mark, and day/month names.
 
   `guess_integer`
 
   :   If `TRUE`, guess integer types for whole numbers, if `FALSE` guess
       numeric type for all numbers.
+
+  `guess_max`
+
+  :   Maximum number of data rows to use for guessing column types.
+      `NA`: uses all data.
+
+  `verbose`
+
+  :   whether to print messages
 
 ## Value
 

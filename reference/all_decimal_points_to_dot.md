@@ -45,7 +45,6 @@ df
 #> 5 1,1a
 
 all_decimal_points_to_dot(df)
-#> Loading required namespace: testthat
 #>     x1
 #> 1  1.1
 #> 2  2.2

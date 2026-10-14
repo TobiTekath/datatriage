@@ -22,6 +22,7 @@ Potentially the numeric representation of `x`, `x` otherwise.
 ## Examples
 
 ``` r
+
 # convert string representation of a number
 try_numeric("5")
 #> [1] 5

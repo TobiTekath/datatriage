@@ -11,6 +11,7 @@ quality issues.
 You can install the development version of datatriage like so:
 
 ``` r
+
 # using pak
 pak::pak("TobiTekath/datatriage")
 

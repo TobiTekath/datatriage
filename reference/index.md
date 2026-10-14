@@ -18,6 +18,8 @@
   : Check for trailing elements
 - [`check_trailing_rowwise()`](https://tobitekath.github.io/datatriage/reference/check_trailing_rowwise.md)
   : Check rowwise for trailing elements
+- [`checkmate_wrapper()`](https://tobitekath.github.io/datatriage/reference/checkmate_wrapper.md)
+  : Adds expectation_failure class to checkmate errors
 - [`find_culprit()`](https://tobitekath.github.io/datatriage/reference/find_culprit.md)
   : Find not-fitting element (culprit) in vector
 - [`move_row_values()`](https://tobitekath.github.io/datatriage/reference/move_row_values.md)

@@ -75,6 +75,7 @@ For more details about the date origin used in Excel, see
 ## Examples
 
 ``` r
+
 # Excel has converted a date to a serial number, e.g. 40729
 
 # convert to date representation
