@@ -3,18 +3,19 @@
 #' Find the element(s) in a vector, whose data type potentially deviates from the majority data type or a specified one.
 #'
 #' This function can be used to find the culprit element, which prevents clean data type conversion.
-#' Utilizes [readr::guess_parser()] to guess type of every vector element.
+#' Utilizes [minty::parse_guess()] to guess type of every vector element.
 #' User can specify which data type the vector `should_be`, or simply rely on the majority guess.
 #' By default does not differentiate between double or integer values. Set `should_be` to `integer` to enforce this differentiation.
 #' Ties in the majority guess are resolved lexicographically by data type name, i.e. `character` > `double` > `integer` > `logical`.
 #' If `should_be` is `numeric`, the data type is interpreted as `double` for lexicographic sorting.
+#' Flags invalid `Date`, `hms`, or `POSIXct` values.
 #'
 #' @param vec Data vector to find the not-fitting element in.
 #' @param should_be Expected data type of `vec`. `Numeric` is indifferent if double or integer is provided. If set to `majority`, expect the data type of most of the elements.
 #' @param return_index Return index of culprit elements rather than their value.
 #' @param na.rm Do not treat `NA` values as culprits, i.e. discard them from the culprit return.
 #' @param verbose If guessed data type should be printed if `should_be` is `majority`.
-#' @inheritDotParams readr::guess_parser -x -guess_integer
+#' @inheritDotParams minty::parse_guess -x -guess_integer
 #'
 #' @returns A named vector, with either the element values (default) or their index (`return_index`) and the guessed data types as names.
 #' @export
@@ -30,9 +31,9 @@
 #' # better for maximizing information content: find culprit element and treat it appropriately
 #' find_culprit(long_data, should_be = "numeric")
 #' as.numeric(gsub(",", "", long_data))
-find_culprit <- function(vec, should_be = c("majority", "numeric", "double", "integer", "character", "logical"), return_index = FALSE, na.rm = TRUE, verbose = TRUE, ...) {
+find_culprit <- function(vec, should_be = c("majority", "numeric", "double", "integer", "character", "logical", "Date", "hms", "POSIXct"), return_index = FALSE, na.rm = TRUE, verbose = TRUE, ...) {
   checkmate_wrapper(checkmate::check_atomic_vector(vec))
-  checkmate_wrapper(checkmate::check_subset(should_be, choices = c("majority", "numeric", "double", "integer", "character", "logical"), empty.ok = FALSE))
+  checkmate_wrapper(checkmate::check_subset(should_be, choices = c("majority", "numeric", "double", "integer", "character", "logical", "Date", "hms", "POSIXct"), empty.ok = FALSE))
   checkmate_wrapper(checkmate::check_flag(return_index))
   checkmate_wrapper(checkmate::check_flag(na.rm))
   checkmate_wrapper(checkmate::check_flag(verbose))
@@ -43,10 +44,30 @@ find_culprit <- function(vec, should_be = c("majority", "numeric", "double", "in
     return(NULL)
   }
 
-  guess <- vapply(as.character(vec),
-    FUN = function(x) readr::guess_parser(x = x, guess_integer = ifelse(should_be == "integer", TRUE, FALSE), ...),
-    FUN.VALUE = character(1)
+  vec_chr <- as.character(vec)
+  unique_vals <- unique(vec_chr)
+
+  guess_int <- should_be == "integer"
+  minty_loc <- minty::default_locale()
+
+  unique_types <- vapply(
+    unique_vals,
+    FUN = function(x) {
+      parsed <- minty::parse_guess(x, guess_integer = guess_int, locale = minty_loc, ...)
+      if (is.object(parsed)) {
+        if (is.na(parsed)) {
+          paste0(class(parsed)[1], "_invalid")
+        } else {
+          class(parsed)[1]
+        }
+      } else {
+        typeof(parsed)
+      }
+    },
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE
   )
+  guess <- stats::setNames(unique_types[match(vec_chr, unique_vals)], vec_chr)
 
   if (na.rm) {
     guess <- guess[!is.na(names(guess))]
@@ -54,6 +75,10 @@ find_culprit <- function(vec, should_be = c("majority", "numeric", "double", "in
 
   if (should_be == "majority") {
     should_be <- names(which.max(table(guess)))
+    if (endsWith(should_be, "_invalid")) {
+      guess_temp <- guess[!endsWith(guess, "_invalid")]
+      should_be <- names(which.max(table(guess_temp)))
+    }
     if (verbose) {
       message("Supplied data should be '", should_be, "' by majority guess.")
     }

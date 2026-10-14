@@ -1,5 +1,5 @@
 test_that("culprit identification works", {
-  df <- data.frame(numeric = c(1.1, 2.2, 3.3, "a"), logical = c(TRUE, FALSE, "TURE", 1), int = c(1, 2.1, 3, 4), char = c(1, "a", "b", "c"))
+  df <- data.frame(numeric = c(1.1, 2.2, "Inf", "a"), logical = c(TRUE, FALSE, "TURE", 1), int = c(1, 2.1, 3, 4), char = c(1, "a", "b", "c"))
 
   expect_message(culp <- find_culprit(df$numeric, verbose = TRUE), regexp = "majority guess")
   expect_identical(unname(culp), "a")
@@ -20,6 +20,27 @@ test_that("culprit identification works", {
   # empty vec should return NULL
   expect_null(find_culprit(character(0)))
 })
+
+test_that("date handling works", {
+  df <- data.frame(
+    date = c("1361-03-03", "1999-09-09", "2100-12-32"), time = c("01:02:03", "12:59:30", "15:62:30"),
+    posixct = c("2022-08-14 12:11:01", "2020-14-01 12:11:01", "2022-08-14 12:11:61"), "unformatted" = c("01:02:03:04", "20-12-2020", "2021.10.12")
+  )
+
+  expect_message(culp <- find_culprit(df$date, verbose = TRUE), regexp = "Date")
+  expect_identical(culp, c("Date_invalid" = "2100-12-32"))
+
+  expect_message(culp <- find_culprit(df$time, verbose = TRUE), regexp = "hms")
+  expect_identical(culp, c("hms_invalid" = "15:62:30"))
+
+  # _invalid can not be majority class
+  expect_message(culp <- find_culprit(df$posixct, verbose = TRUE), regexp = "POSIXct")
+  expect_identical(culp, c("POSIXct_invalid" = "2020-14-01 12:11:01", "POSIXct_invalid" = "2022-08-14 12:11:61"))
+
+  expect_message(culp <- find_culprit(df$unformatted, verbose = TRUE), regexp = "character")
+  expect_identical(culp, NULL)
+})
+
 
 test_that("NA handling works", {
   df <- data.frame(

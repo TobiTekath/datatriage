@@ -12,15 +12,6 @@
 #' @inheritParams checkmate::assert
 #'
 #' @returns `TRUE` invisibly if check passes, the extended error otherwise.
-#'
-#' @examples
-#' checkmate_wrapper(checkmate::check_integerish(5))
-#'
-#' x <- "hi"
-#' checkmate_wrapper(checkmate::check_string(x), checkmate::check_choice(x, c("hi", "ho")))
-#'
-#' x <- TRUE
-#' checkmate_wrapper(checkmate::check_string(x), checkmate::check_flag(x), combine = "or")
 checkmate_wrapper <- function(..., combine = "and", info = "") {
   # allow check combinations like checkmate::assert()
   dots <- match.call(expand.dots = FALSE)$...

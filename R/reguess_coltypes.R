@@ -1,13 +1,13 @@
 #' Re-convert character columns in existing data frame
 #'
-#' Convenience wrapper around [all_decimal_points_to_dot()] and [readr::type_convert()].
+#' Convenience wrapper around [all_decimal_points_to_dot()] and [minty::type_convert()].
 #' Optionally converts numeric-like characters with a comma as decimal point (as used in e.g. Germany) to dots,
 #' then performs a re-guessing of column types of all character columns.
 #'
 #' @param df A data.frame or tibble which character columns class shall be re-guessed.
 #' @param convert_comma_to_dot Shall numeric-like characters with a comma as decimal point like '1,2' be converted to '1.2' before column type guessing?
-#' @param silent Suppress column specification message from [readr::type_convert()] column type guessing.
-#' @inheritDotParams readr::type_convert -df
+#' @param silent Suppress column specification message from [minty::type_convert()] column type guessing.
+#' @inheritDotParams minty::type_convert -df
 #'
 #' @returns A similar object as `df`, but column types potentially have been changed.
 #' @export
@@ -32,11 +32,7 @@ reguess_coltypes <- function(df, convert_comma_to_dot = FALSE, silent = TRUE, ..
     df <- df |> all_decimal_points_to_dot(trim_ws = TRUE)
   }
 
-  if (silent) {
-    suppress_matching(df <- readr::type_convert(df = df, ...), pattern = "Column specification", suppress_warnings = FALSE, suppress_cat_print = FALSE)
-  } else {
-    df <- readr::type_convert(df = df, ...)
-  }
+  df <- minty::type_convert(df = df, verbose = !silent, ...)
 
   return(df)
 }

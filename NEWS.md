@@ -1,3 +1,8 @@
+# datatriage 0.1.3
+* Changed interal checkmate type-checking utilizing checkmate_wrapper().
+* Switched type-guessing from soft-deprecated readr to minty.
+* Hardened try_date() input parsing.
+
 # datatriage 0.1.2
 * Improved try_date() handling of formatted date strings.
 * Enable tidy_t() to transpose on a temporarily added column.

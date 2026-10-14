@@ -26,12 +26,3 @@ Allows for multiple \code{checkmate::check_} via \code{combine}, like \code{\lin
 \details{
 Allows to check for catched errors like that: \code{testthat::expect_error(checkmate_wrapper(checkmate::check_integerish(5)), class = "expectation_failure")}
 }
-\examples{
-checkmate_wrapper(checkmate::check_integerish(5))
-
-x <- "hi"
-checkmate_wrapper(checkmate::check_string(x), checkmate::check_choice(x, c("hi", "ho")))
-
-x <- TRUE
-checkmate_wrapper(checkmate::check_string(x), checkmate::check_flag(x), combine = "or")
-}

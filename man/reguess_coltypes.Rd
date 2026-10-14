@@ -11,13 +11,13 @@ reguess_coltypes(df, convert_comma_to_dot = FALSE, silent = TRUE, ...)
 
 \item{convert_comma_to_dot}{Shall numeric-like characters with a comma as decimal point like '1,2' be converted to '1.2' before column type guessing?}
 
-\item{silent}{Suppress column specification message from \code{\link[readr:type_convert]{readr::type_convert()}} column type guessing.}
+\item{silent}{Suppress column specification message from \code{\link[minty:type_convert]{minty::type_convert()}} column type guessing.}
 
 \item{...}{
-  Arguments passed on to \code{\link[readr:type_convert]{readr::type_convert}}
+  Arguments passed on to \code{\link[minty:type_convert]{minty::type_convert}}
   \describe{
-    \item{\code{col_types}}{One of \code{NULL}, a \code{\link[readr:cols]{cols()}} specification, or
-a string. See \code{vignette("readr")} for more details.
+    \item{\code{col_types}}{One of \code{NULL}, a \code{\link[minty:cols]{cols()}} specification, or
+a string.
 
 If \code{NULL}, column types will be imputed using all rows.}
     \item{\code{na}}{Character vector of strings to interpret as missing values. Set this
@@ -26,18 +26,20 @@ option to \code{character()} to indicate no missing values.}
 each field before parsing it?}
     \item{\code{locale}}{The locale controls defaults that vary from place to place.
 The default locale is US-centric (like R), but you can use
-\code{\link[readr:locale]{locale()}} to create your own locale that controls things like
+\code{\link[minty:locale]{locale()}} to create your own locale that controls things like
 the default time zone, encoding, decimal mark, big mark, and day/month
 names.}
     \item{\code{guess_integer}}{If \code{TRUE}, guess integer types for whole numbers, if
 \code{FALSE} guess numeric type for all numbers.}
+    \item{\code{guess_max}}{Maximum number of data rows to use for guessing column types. \code{NA}: uses all data.}
+    \item{\code{verbose}}{whether to print messages}
   }}
 }
 \value{
 A similar object as \code{df}, but column types potentially have been changed.
 }
 \description{
-Convenience wrapper around \code{\link[=all_decimal_points_to_dot]{all_decimal_points_to_dot()}} and \code{\link[readr:type_convert]{readr::type_convert()}}.
+Convenience wrapper around \code{\link[=all_decimal_points_to_dot]{all_decimal_points_to_dot()}} and \code{\link[minty:type_convert]{minty::type_convert()}}.
 Optionally converts numeric-like characters with a comma as decimal point (as used in e.g. Germany) to dots,
 then performs a re-guessing of column types of all character columns.
 }

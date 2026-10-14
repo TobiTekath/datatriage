@@ -6,7 +6,8 @@
 \usage{
 find_culprit(
   vec,
-  should_be = c("majority", "numeric", "double", "integer", "character", "logical"),
+  should_be = c("majority", "numeric", "double", "integer", "character", "logical",
+    "Date", "hms", "POSIXct"),
   return_index = FALSE,
   na.rm = TRUE,
   verbose = TRUE,
@@ -25,15 +26,19 @@ find_culprit(
 \item{verbose}{If guessed data type should be printed if \code{should_be} is \code{majority}.}
 
 \item{...}{
-  Arguments passed on to \code{\link[readr:parse_guess]{readr::guess_parser}}
+  Arguments passed on to \code{\link[minty:parse_guess]{minty::parse_guess}}
   \describe{
     \item{\code{na}}{Character vector of strings to interpret as missing values. Set this
 option to \code{character()} to indicate no missing values.}
     \item{\code{locale}}{The locale controls defaults that vary from place to place.
 The default locale is US-centric (like R), but you can use
-\code{\link[readr:locale]{locale()}} to create your own locale that controls things like
+\code{\link[minty:locale]{locale()}} to create your own locale that controls things like
 the default time zone, encoding, decimal mark, big mark, and day/month
 names.}
+    \item{\code{trim_ws}}{Should leading and trailing whitespace (ASCII spaces and tabs) be trimmed from
+each field before parsing it?}
+    \item{\code{guess_max}}{Maximum number of data rows to use for guessing column types. \code{NA}: uses all data.}
+    \item{\code{.return_problems}}{Whether to hide the \code{problems} tibble from the output}
   }}
 }
 \value{
@@ -44,11 +49,12 @@ Find the element(s) in a vector, whose data type potentially deviates from the m
 }
 \details{
 This function can be used to find the culprit element, which prevents clean data type conversion.
-Utilizes \code{\link[readr:parse_guess]{readr::guess_parser()}} to guess type of every vector element.
+Utilizes \code{\link[minty:parse_guess]{minty::parse_guess()}} to guess type of every vector element.
 User can specify which data type the vector \code{should_be}, or simply rely on the majority guess.
 By default does not differentiate between double or integer values. Set \code{should_be} to \code{integer} to enforce this differentiation.
 Ties in the majority guess are resolved lexicographically by data type name, i.e. \code{character} > \code{double} > \code{integer} > \code{logical}.
 If \code{should_be} is \code{numeric}, the data type is interpreted as \code{double} for lexicographic sorting.
+Flags invalid \code{Date}, \code{hms}, or \code{POSIXct} values.
 }
 \examples{
 long_data <- c(1, 2.2, "4,", 5)

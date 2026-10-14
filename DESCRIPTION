@@ -23,9 +23,9 @@ Depends: R (>= 4.1.0)
 Imports:
   checkmate,
   dplyr,
+  minty,
   performance,
   purrr,
-  readr,
   rlang,
   stringr,
   tibble,

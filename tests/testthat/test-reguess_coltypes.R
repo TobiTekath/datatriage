@@ -1,6 +1,5 @@
 test_that("column type guessing works", {
-  # df <- data.frame(a = c(1, 2, 3), b = c("a", "b", "c"), c = c(TRUE, FALSE, NA), d = factor(c(1, 2, 1)), e = c(1.1, 1.2, 1.3), f = c(1, 2, Inf))
-  df <- data.frame(a = c(1, 2, 3), b = c("a", "b", "c"), c = c(TRUE, FALSE, NA), d = factor(c(1, 2, 1)), e = c(1.1, 1.2, 1.3))
+  df <- data.frame(a = c(1, 2, 3), b = c("a", "b", "c"), c = c(TRUE, FALSE, NA), d = factor(c(1, 2, 1)), e = c(1.1, 1.2, 1.3), f = c(1, 2, Inf))
 
   char_df <- all_to_character(df)
 
@@ -19,7 +18,7 @@ test_that("convert_comma_to_dot works", {
 test_that("silent works", {
   df <- data.frame(a = c(1, 2, 3), b = c("a", "b", "c"), c = c(TRUE, FALSE, NA), d = factor(c(1, 2, 1)), e = c(1.1, 1.2, 1.3))
 
-  expect_message(reguess_coltypes(all_to_character(df), silent = FALSE), regexp = "Column specification")
+  expect_message(expect_message(reguess_coltypes(all_to_character(df), silent = FALSE), regexp = "Column specification"), regexp = "cols")
 })
 
 test_that("ellipsis works", {
