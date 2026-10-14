@@ -5,5 +5,5 @@ test_that("case_modify works", {
     dplyr::mutate(a = case_modify(a, 3 ~ 4))
   expect_identical(res[["a"]], c(1, 2, 4))
 
-  #TODO: test different dplyr versions
+  # TODO: test different dplyr versions
 })

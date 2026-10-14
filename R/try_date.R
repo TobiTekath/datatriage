@@ -55,6 +55,10 @@ try_date <- function(x, origin = c("excel", "excel_off1", "excel_1904", "unix"),
     "unix" ~ "1970-01-01"
   )
 
+  if (is.null(x) || is.na(x) || inherits(x, "Date")) {
+    return(x)
+  }
+
   num_x <- try_numeric(x)
   if (is.numeric(num_x)) {
     if (origin == "unix") {

@@ -17,7 +17,12 @@ test_that("potential date conversion works", {
   # perform no conversion here
   expect_identical(try_date("invalid"), "invalid")
   expect_identical(try_date(NA), NA)
+  expect_identical(try_date(NA_character_), NA_character_)
+  expect_identical(try_date(NA_integer_), NA_integer_)
   expect_identical(try_date(NULL), NULL)
+
+  # if already date, do not convert again
+  expect_identical(try_date(as.Date("2002-03-03")), as.Date("2002-03-03"))
 
   # min and max date
   expect_identical(try_date("40728", min_date = date_string), "40728")
