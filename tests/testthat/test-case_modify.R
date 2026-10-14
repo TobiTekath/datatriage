@@ -4,4 +4,6 @@ test_that("case_modify works", {
   res <- dummy_df |>
     dplyr::mutate(a = case_modify(a, 3 ~ 4))
   expect_identical(res[["a"]], c(1, 2, 4))
+
+  #TODO: test different dplyr versions
 })

@@ -20,11 +20,11 @@
 #'
 #' summarize_outlier(vec)
 summarize_outlier <- function(vec, minimal_unique_values = 10, method = c("iqr", "zscore_robust"), threshold = list(zscore_robust = 7, iqr = 5), sort = TRUE) {
-  checkmate::expect_atomic_vector(vec, all.missing = TRUE)
-  checkmate::expect_int(minimal_unique_values, na.ok = FALSE, lower = 1)
-  checkmate::expect_character(method, min.len = 1, any.missing = FALSE)
-  checkmate::expect_list(threshold, types = "numeric", any.missing = FALSE, len = length(method), names = "named")
-  checkmate::assert(
+  checkmate_wrapper(checkmate::check_atomic_vector(vec, all.missing = TRUE))
+  checkmate_wrapper(checkmate::check_int(minimal_unique_values, na.ok = FALSE, lower = 1))
+  checkmate_wrapper(checkmate::check_character(method, min.len = 1, any.missing = FALSE))
+  checkmate_wrapper(checkmate::check_list(threshold, types = "numeric", any.missing = FALSE, len = length(method), names = "named"))
+  checkmate_wrapper(
     checkmate::check_flag(sort),
     checkmate::check_choice(sort, choices = c("ascending", "descending"), null.ok = FALSE),
     combine = "or"

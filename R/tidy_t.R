@@ -43,21 +43,21 @@
 #' tidy_t(df, new_id_colname = "var")
 #' @importFrom rlang .data :=
 tidy_t <- function(df, id_col = 1, exclude_cols = NULL, new_id_colname = NULL, reguess_coltypes = FALSE, name_repair = "unique", verbose = FALSE) {
-  checkmate::expect_data_frame(df, null.ok = FALSE)
-  checkmate::assert(
+  checkmate_wrapper(checkmate::check_data_frame(df, null.ok = FALSE))
+  checkmate_wrapper(
     checkmate::check_integerish(id_col, len = 1, any.missing = FALSE, null.ok = FALSE, lower = 0, upper = ncol(df)),
     checkmate::check_choice(id_col, choices = colnames(df), null.ok = FALSE),
     combine = "or"
   )
-  checkmate::assert(
+  checkmate_wrapper(
     checkmate::check_integerish(exclude_cols, any.missing = FALSE, null.ok = TRUE, lower = 1, upper = ncol(df)),
     checkmate::check_subset(exclude_cols, choices = colnames(df), empty.ok = FALSE),
     combine = "or"
   )
-  checkmate::expect_string(new_id_colname, na.ok = FALSE, min.chars = 1, null.ok = TRUE)
-  checkmate::expect_flag(reguess_coltypes)
-  checkmate::expect_choice(name_repair, choices = eval(formals(vctrs::vec_as_names)$repair))
-  checkmate::expect_flag(verbose)
+  checkmate_wrapper(checkmate::check_string(new_id_colname, na.ok = FALSE, min.chars = 1, null.ok = TRUE))
+  checkmate_wrapper(checkmate::check_flag(reguess_coltypes))
+  checkmate_wrapper(checkmate::check_choice(name_repair, choices = eval(formals(vctrs::vec_as_names)$repair)))
+  checkmate_wrapper(checkmate::check_flag(verbose))
 
   stopifnot("'df' must be a data frame without row names." = !tibble::has_rownames(df))
 
@@ -73,7 +73,7 @@ tidy_t <- function(df, id_col = 1, exclude_cols = NULL, new_id_colname = NULL, r
   if (is.numeric(exclude_cols)) {
     exclude_cols <- colnames(df)[exclude_cols]
   }
-  checkmate::expect_disjunct(id_col, exclude_cols, info = "id_col can not part of exclude_cols.")
+  checkmate_wrapper(checkmate::check_disjunct(id_col, exclude_cols), info = "id_col can not be part of exclude_cols.")
 
   if (anyDuplicated(df[[id_col]]) != 0 && name_repair == "minimal") {
     warning("tidy_t: Duplicated names detected, try using a different 'name_repair' option.")

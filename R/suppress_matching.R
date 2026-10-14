@@ -37,10 +37,10 @@ suppress_matching <- function(expr,
                               suppress_warnings = TRUE,
                               suppress_cat_print = TRUE,
                               ...) {
-  checkmate::expect_string(pattern, null.ok = TRUE)
-  checkmate::expect_flag(suppress_messages)
-  checkmate::expect_flag(suppress_warnings)
-  checkmate::expect_flag(suppress_cat_print)
+  checkmate_wrapper(checkmate::check_string(pattern, null.ok = TRUE))
+  checkmate_wrapper(checkmate::check_flag(suppress_messages))
+  checkmate_wrapper(checkmate::check_flag(suppress_warnings))
+  checkmate_wrapper(checkmate::check_flag(suppress_cat_print))
 
   # helper pattern matching function
   pattern_match <- function(msg, pattern, ...) {

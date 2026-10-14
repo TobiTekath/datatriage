@@ -31,11 +31,11 @@
 #' find_culprit(long_data, should_be = "numeric")
 #' as.numeric(gsub(",", "", long_data))
 find_culprit <- function(vec, should_be = c("majority", "numeric", "double", "integer", "character", "logical"), return_index = FALSE, na.rm = TRUE, verbose = TRUE, ...) {
-  checkmate::expect_atomic_vector(vec)
-  checkmate::expect_subset(should_be, choices = c("majority", "numeric", "double", "integer", "character", "logical"), empty.ok = FALSE)
-  checkmate::expect_flag(return_index)
-  checkmate::expect_flag(na.rm)
-  checkmate::expect_flag(verbose)
+  checkmate_wrapper(checkmate::check_atomic_vector(vec))
+  checkmate_wrapper(checkmate::check_subset(should_be, choices = c("majority", "numeric", "double", "integer", "character", "logical"), empty.ok = FALSE))
+  checkmate_wrapper(checkmate::check_flag(return_index))
+  checkmate_wrapper(checkmate::check_flag(na.rm))
+  checkmate_wrapper(checkmate::check_flag(verbose))
 
   should_be <- match.arg(should_be)
 

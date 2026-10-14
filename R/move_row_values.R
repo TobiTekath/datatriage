@@ -42,12 +42,12 @@
 #' df_mov
 #' @importFrom rlang !!
 move_row_values <- function(df, select_rows = colnames(df)[1], select_rows_values = NULL, from_col, to_col, clear_value = NA) {
-  checkmate::expect_data_frame(df, min.cols = 1, min.rows = 1)
-  checkmate::expect_atomic_vector(select_rows, any.missing = FALSE, min.len = 1, max.len = nrow(df))
-  checkmate::expect_subset(from_col, choices = colnames(df), empty.ok = FALSE)
-  checkmate::expect_subset(to_col, choices = colnames(df), empty.ok = FALSE)
-  checkmate::expect_character(to_col, len = length(from_col))
-  checkmate::expect_atomic_vector(clear_value, len = 1)
+  checkmate_wrapper(checkmate::check_data_frame(df, min.cols = 1, min.rows = 1))
+  checkmate_wrapper(checkmate::check_atomic_vector(select_rows, any.missing = FALSE, min.len = 1, max.len = nrow(df)))
+  checkmate_wrapper(checkmate::check_subset(from_col, choices = colnames(df), empty.ok = FALSE))
+  checkmate_wrapper(checkmate::check_subset(to_col, choices = colnames(df), empty.ok = FALSE))
+  checkmate_wrapper(checkmate::check_character(to_col, len = length(from_col)))
+  checkmate_wrapper(checkmate::check_atomic_vector(clear_value, len = 1))
 
   if (!is.character(select_rows)) {
     if (!is.null(select_rows_values)) {
@@ -63,8 +63,8 @@ move_row_values <- function(df, select_rows = colnames(df)[1], select_rows_value
     select_rows <- colnames(df)[1]
   }
 
-  checkmate::expect_subset(select_rows, colnames(df), empty.ok = FALSE)
-  checkmate::expect_subset(select_rows_values, df[[select_rows]], empty.ok = FALSE, info = "Please select the rows thats should be affected.")
+  checkmate_wrapper(checkmate::check_subset(select_rows, colnames(df), empty.ok = FALSE))
+  checkmate_wrapper(checkmate::check_subset(select_rows_values, df[[select_rows]], empty.ok = FALSE), info = "Please select the rows thats should be affected.")
 
   new_colnames <- stats::setNames(from_col, to_col)
 

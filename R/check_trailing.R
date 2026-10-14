@@ -28,8 +28,8 @@
 #' check_trailing(c(1, NA, NA), trail_value = NA)
 #'
 check_trailing <- function(vec, trail_value) {
-  checkmate::expect_atomic_vector(vec, any.missing = TRUE, all.missing = TRUE)
-  checkmate::expect_atomic_vector(trail_value, len = 1, all.missing = TRUE)
+  checkmate_wrapper(checkmate::check_atomic_vector(vec, any.missing = TRUE, all.missing = TRUE))
+  checkmate_wrapper(checkmate::check_atomic_vector(trail_value, len = 1, all.missing = TRUE))
 
   if (is.na(trail_value)) {
     pos <- which(is.na(vec))

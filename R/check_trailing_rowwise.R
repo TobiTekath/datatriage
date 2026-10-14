@@ -16,8 +16,8 @@
 #' # check over all columns rowwise for trailing 3s
 #' check_trailing_rowwise(df, cols = colnames(df), trail_value = 3)
 check_trailing_rowwise <- function(df, cols, trail_value) {
-  checkmate::expect_data_frame(df)
-  checkmate::expect_subset(cols, colnames(df), empty.ok = FALSE)
+  checkmate_wrapper(checkmate::check_data_frame(df))
+  checkmate_wrapper(checkmate::check_subset(cols, colnames(df), empty.ok = FALSE))
 
   ret <- df |>
     dplyr::select(tidyselect::all_of(cols)) |>

@@ -44,12 +44,12 @@
 #'   find_outliers = TRUE, find_outlier_opts = list(minimal_unique_values = 1)
 #' )
 summarize_table <- function(df, custom_funs = list(), base_summaries = TRUE, find_culprits = FALSE, find_outliers = FALSE, find_outlier_opts = list()) {
-  checkmate::expect_data_frame(df, min.rows = 1, min.cols = 1)
-  checkmate::expect_list(custom_funs, names = "named", any.missing = FALSE)
-  checkmate::expect_flag(base_summaries)
-  checkmate::expect_flag(find_culprits)
-  checkmate::expect_flag(find_outliers)
-  checkmate::expect_list(find_outlier_opts, names = "named", any.missing = FALSE)
+  checkmate_wrapper(checkmate::check_data_frame(df, min.rows = 1, min.cols = 1))
+  checkmate_wrapper(checkmate::check_list(custom_funs, names = "named", any.missing = FALSE))
+  checkmate_wrapper(checkmate::check_flag(base_summaries))
+  checkmate_wrapper(checkmate::check_flag(find_culprits))
+  checkmate_wrapper(checkmate::check_flag(find_outliers))
+  checkmate_wrapper(checkmate::check_list(find_outlier_opts, names = "named", any.missing = FALSE))
 
   funs <- list()
 
@@ -77,7 +77,7 @@ summarize_table <- function(df, custom_funs = list(), base_summaries = TRUE, fin
   }
 
   all_funs <- c(funs, custom_funs)
-  checkmate::expect_list(all_funs, min.len = 1, info = "Supply at least one summary function.")
+  checkmate_wrapper(checkmate::check_list(all_funs, min.len = 1), info = "Supply at least one summary function.")
   if (anyDuplicated(names(all_funs)) != 0) {
     rlang::warn("summarize_table: Enforcing unique summary column names.")
     names(all_funs) <- make.unique(names(all_funs))

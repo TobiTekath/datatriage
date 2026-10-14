@@ -36,7 +36,7 @@
 #' relocate_multi(df, move = c("c", "a", "a"), after = c("d", "c", "d"))
 #'
 relocate_multi <- function(df, move = NULL, before = NULL, after = NULL) {
-  checkmate::expect_data_frame(df, null.ok = FALSE)
+  checkmate_wrapper(checkmate::check_data_frame(df, null.ok = FALSE))
 
   # do not throw warning for potentially evaluating tidy-select expression
   if (rlang::quo_is_null(rlang::enquo(move))) {

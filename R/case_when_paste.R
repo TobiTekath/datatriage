@@ -24,8 +24,8 @@
 #' )
 #' @importFrom rlang !!!
 case_when_paste <- function(..., .default = "", .sep = "") {
-  checkmate::expect_string(.default, na.ok = TRUE)
-  checkmate::expect_string(.sep, na.ok = FALSE)
+  checkmate_wrapper(checkmate::check_string(.default, na.ok = TRUE))
+  checkmate_wrapper(checkmate::check_string(.sep, na.ok = FALSE))
 
   formulas <- rlang::list2(...)
   if (length(formulas) == 0) {

@@ -22,8 +22,8 @@
 #'
 #' @importFrom rlang !!!
 str_c_na <- function(..., sep = "", collapse = NULL) {
-  checkmate::expect_string(sep, na.ok = FALSE, null.ok = FALSE)
-  checkmate::expect_string(collapse, na.ok = FALSE, null.ok = TRUE)
+  checkmate_wrapper(checkmate::check_string(sep, na.ok = FALSE, null.ok = FALSE))
+  checkmate_wrapper(checkmate::check_string(collapse, na.ok = FALSE, null.ok = TRUE))
 
   args <- list(...)
 

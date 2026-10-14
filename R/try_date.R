@@ -41,11 +41,11 @@
 #' @seealso [try_dates()]
 try_date <- function(x, origin = c("excel", "excel_off1", "excel_1904", "unix"),
                      min_date = NULL, max_date = NULL, return_character = TRUE) {
-  checkmate::expect_atomic(x, max.len = 1)
+  checkmate_wrapper(checkmate::check_atomic(x, max.len = 1))
   origin <- match.arg(origin, several.ok = FALSE)
-  checkmate::expect_string(min_date, pattern = "\\d{4}-\\d{2}-\\d{2}", null.ok = TRUE)
-  checkmate::expect_string(max_date, pattern = "\\d{4}-\\d{2}-\\d{2}", null.ok = TRUE)
-  checkmate::expect_flag(return_character)
+  checkmate_wrapper(checkmate::check_string(min_date, pattern = "\\d{4}-\\d{2}-\\d{2}", null.ok = TRUE))
+  checkmate_wrapper(checkmate::check_string(max_date, pattern = "\\d{4}-\\d{2}-\\d{2}", null.ok = TRUE))
+  checkmate_wrapper(checkmate::check_flag(return_character))
 
   origin_date <- case_modify(
     origin,

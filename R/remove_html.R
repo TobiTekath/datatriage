@@ -14,8 +14,8 @@
 #'
 #' remove_html(text)
 remove_html <- function(vec, squish = TRUE) {
-  checkmate::expect_character(vec, null.ok = FALSE)
-  checkmate::expect_flag(squish)
+  checkmate_wrapper(checkmate::check_character(vec, null.ok = FALSE))
+  checkmate_wrapper(checkmate::check_flag(squish))
 
   stripped <- stringr::str_remove_all(vec, "<([a-z]+|/|\\!).*?>")
   if (squish) {

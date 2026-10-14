@@ -21,19 +21,19 @@
 #' apply_rowwise(vec1, vec2, apply_fun = ">", wrap_fun_vec2 = try_numeric)
 #'
 apply_rowwise <- function(vec1, vec2, apply_fun, wrap_fun_vec1 = NULL, wrap_fun_vec2 = NULL) {
-  checkmate::expect_atomic_vector(vec1)
-  checkmate::expect_atomic_vector(vec2, len = length(vec1))
-  checkmate::assert(
+  checkmate_wrapper(checkmate::check_atomic_vector(vec1))
+  checkmate_wrapper(checkmate::check_atomic_vector(vec2, len = length(vec1)))
+  checkmate_wrapper(
     checkmate::check_function(apply_fun),
     checkmate::check_string(apply_fun),
     combine = "or"
   )
-  checkmate::assert(
+  checkmate_wrapper(
     checkmate::check_function(wrap_fun_vec1),
     checkmate::check_string(wrap_fun_vec1, null.ok = TRUE),
     combine = "or"
   )
-  checkmate::assert(
+  checkmate_wrapper(
     checkmate::check_function(wrap_fun_vec2),
     checkmate::check_string(wrap_fun_vec2, null.ok = TRUE),
     combine = "or"

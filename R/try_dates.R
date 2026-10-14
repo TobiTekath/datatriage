@@ -19,6 +19,6 @@
 #'
 #' @seealso [try_date()]
 try_dates <- function(vec, ...) {
-  checkmate::expect_atomic_vector(vec, any.missing = TRUE, all.missing = TRUE)
+  checkmate_wrapper(checkmate::check_atomic_vector(vec, any.missing = TRUE, all.missing = TRUE))
   return(sapply(vec, FUN = function(x) as.character(try_date(x, ...)), USE.NAMES = FALSE))
 }

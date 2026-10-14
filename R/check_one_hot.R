@@ -30,10 +30,10 @@
 #' check_one_hot(df, cols = colnames(df), check_value = "one")
 #'
 check_one_hot <- function(df, cols, check_value = 1, allow_no_selection = FALSE) {
-  checkmate::expect_data_frame(df, min.cols = 1, min.rows = 1)
-  checkmate::expect_subset(cols, choices = colnames(df), empty.ok = FALSE)
-  checkmate::expect_atomic(check_value, len = 1)
-  checkmate::expect_flag(allow_no_selection)
+  checkmate_wrapper(checkmate::check_data_frame(df, min.cols = 1, min.rows = 1))
+  checkmate_wrapper(checkmate::check_subset(cols, choices = colnames(df), empty.ok = FALSE))
+  checkmate_wrapper(checkmate::check_atomic(check_value, len = 1))
+  checkmate_wrapper(checkmate::check_flag(allow_no_selection))
 
   if (is.na(check_value)) {
     # always pass two values to check function

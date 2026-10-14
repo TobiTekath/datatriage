@@ -13,6 +13,6 @@
 #'
 #' all_to_character(df)
 all_to_character <- function(df) {
-  checkmate::expect_data_frame(df, null.ok = FALSE)
+  checkmate_wrapper(checkmate::check_data_frame(df, null.ok = FALSE))
   return(df |> dplyr::mutate(dplyr::across(tidyselect::everything(), ~ as.character(.))))
 }

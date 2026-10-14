@@ -24,9 +24,9 @@
 #' df <- data.frame(a = c("a,b", "1,b", "c,0"), b = c("1,1", "1,2", "1,3"))
 #' reguess_coltypes(df, convert_comma_to_dot = TRUE)
 reguess_coltypes <- function(df, convert_comma_to_dot = FALSE, silent = TRUE, ...) {
-  checkmate::expect_data_frame(df, null.ok = FALSE)
-  checkmate::expect_flag(convert_comma_to_dot)
-  checkmate::expect_flag(silent)
+  checkmate_wrapper(checkmate::check_data_frame(df, null.ok = FALSE))
+  checkmate_wrapper(checkmate::check_flag(convert_comma_to_dot))
+  checkmate_wrapper(checkmate::check_flag(silent))
 
   if (convert_comma_to_dot) {
     df <- df |> all_decimal_points_to_dot(trim_ws = TRUE)

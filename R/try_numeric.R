@@ -23,7 +23,7 @@
 #' try_numeric(NULL)
 #'
 try_numeric <- function(x) {
-  checkmate::expect_atomic(x, max.len = 1)
+  checkmate_wrapper(checkmate::check_atomic(x, max.len = 1))
 
   test <- suppress_matching(as.numeric(x), suppress_messages = FALSE, suppress_cat_print = FALSE, pattern = "NAs")
   if (is.null(x) || is.na(test)) {
