@@ -2,7 +2,7 @@ pandoc: 3.8.3
 pkgdown: 2.2.1
 pkgdown_sha: ~
 articles: {}
-last_built: 2026-10-14T17:52Z
+last_built: 2026-10-16T14:59Z
 urls:
   reference: https://tobitekath.github.io/datatriage/reference
   article: https://tobitekath.github.io/datatriage/articles

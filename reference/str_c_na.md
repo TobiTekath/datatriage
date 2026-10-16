@@ -48,15 +48,13 @@ length 1.
 ## Examples
 
 ``` r
-vec <- c("a", NA, "b")
+# default str_c only returns NA
+stringr::str_c("a", NA, "b")
+#> [1] NA
 
-# only returns NA
-stringr::str_c(vec)
-#> [1] "a" NA  "b"
-
-# discards NA
-str_c_na(vec)
-#> [1] "a" NA  "b"
+# str_c_na discards NAs
+str_c_na("a", NA, "b")
+#> [1] "ab"
 
 # collapse also discards NAs
 str_c_na(c("a", NA), c(NA, "b"), collapse = ", ")

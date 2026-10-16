@@ -83,7 +83,7 @@ A named vector, with either the element values (default) or their index
 
 ## Details
 
-This function can be used to find the culprit element, which prevents
+This function can be used to find the culprit elements, which prevent
 clean data type conversion. Utilizes
 [`minty::parse_guess()`](http://gesistsa.github.io/minty/reference/parse_guess.md)
 to guess type of every vector element. User can specify which data type
@@ -98,18 +98,32 @@ invalid `Date`, `hms`, or `POSIXct` values.
 ## Examples
 
 ``` r
-long_data <- c(1, 2.2, "4,", 5)
+long_data <- c(1, 2.2, ",4", 5)
 long_data
-#> [1] "1"   "2.2" "4,"  "5"  
+#> [1] "1"   "2.2" ",4"  "5"  
 
-# standard type conversion would convert "4," to NA and give a warning
+# standard type conversion would convert ",4" to NA and give a warning
 suppressWarnings(as.numeric(long_data))
 #> [1] 1.0 2.2  NA 5.0
 
-
-# better for maximizing information content: find culprit element and treat it appropriately
+# for maximizing information content: find culprit element and treat it appropriately
 find_culprit(long_data, should_be = "numeric")
-#> NULL
+#> character 
+#>      ",4" 
 as.numeric(gsub(",", "", long_data))
 #> [1] 1.0 2.2 4.0 5.0
+
+# other example: a supposed vector of integers
+integer_vector <- c(1, 2, 2.99, 4, 5)
+
+# straight integer conversion might not resolve deviations as intended
+as.integer(integer_vector)
+#> [1] 1 2 2 4 5
+
+# better: identify deviation and handle it appropriately
+find_culprit(integer_vector, should_be = "integer")
+#> double 
+#> "2.99" 
+round(integer_vector)
+#> [1] 1 2 3 4 5
 ```
