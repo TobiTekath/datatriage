@@ -2,7 +2,7 @@
 #'
 #' Find the element(s) in a vector, whose data type potentially deviates from the majority data type or a specified one.
 #'
-#' This function can be used to find the culprit element, which prevents clean data type conversion.
+#' This function can be used to find the culprit elements, which prevent clean data type conversion.
 #' Utilizes [minty::parse_guess()] to guess type of every vector element.
 #' User can specify which data type the vector `should_be`, or simply rely on the majority guess.
 #' By default does not differentiate between double or integer values. Set `should_be` to `integer` to enforce this differentiation.
@@ -21,16 +21,25 @@
 #' @export
 #'
 #' @examples
-#' long_data <- c(1, 2.2, "4,", 5)
+#' long_data <- c(1, 2.2, ",4", 5)
 #' long_data
 #'
-#' # standard type conversion would convert "4," to NA and give a warning
+#' # standard type conversion would convert ",4" to NA and give a warning
 #' suppressWarnings(as.numeric(long_data))
 #'
-#'
-#' # better for maximizing information content: find culprit element and treat it appropriately
+#' # for maximizing information content: find culprit element and treat it appropriately
 #' find_culprit(long_data, should_be = "numeric")
 #' as.numeric(gsub(",", "", long_data))
+#'
+#' # other example: a supposed vector of integers
+#' integer_vector <- c(1, 2, 2.99, 4, 5)
+#'
+#' # straight integer conversion might not resolve deviations as intended
+#' as.integer(integer_vector)
+#'
+#' # better: identify deviation and handle it appropriately
+#' find_culprit(integer_vector, should_be = "integer")
+#' round(integer_vector)
 find_culprit <- function(vec, should_be = c("majority", "numeric", "double", "integer", "character", "logical", "Date", "hms", "POSIXct"), return_index = FALSE, na.rm = TRUE, verbose = TRUE, ...) {
   checkmate_wrapper(checkmate::check_atomic_vector(vec))
   checkmate_wrapper(checkmate::check_subset(should_be, choices = c("majority", "numeric", "double", "integer", "character", "logical", "Date", "hms", "POSIXct"), empty.ok = FALSE))

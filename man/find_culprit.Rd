@@ -48,7 +48,7 @@ A named vector, with either the element values (default) or their index (\code{r
 Find the element(s) in a vector, whose data type potentially deviates from the majority data type or a specified one.
 }
 \details{
-This function can be used to find the culprit element, which prevents clean data type conversion.
+This function can be used to find the culprit elements, which prevent clean data type conversion.
 Utilizes \code{\link[minty:parse_guess]{minty::parse_guess()}} to guess type of every vector element.
 User can specify which data type the vector \code{should_be}, or simply rely on the majority guess.
 By default does not differentiate between double or integer values. Set \code{should_be} to \code{integer} to enforce this differentiation.
@@ -57,14 +57,23 @@ If \code{should_be} is \code{numeric}, the data type is interpreted as \code{dou
 Flags invalid \code{Date}, \code{hms}, or \code{POSIXct} values.
 }
 \examples{
-long_data <- c(1, 2.2, "4,", 5)
+long_data <- c(1, 2.2, ",4", 5)
 long_data
 
-# standard type conversion would convert "4," to NA and give a warning
+# standard type conversion would convert ",4" to NA and give a warning
 suppressWarnings(as.numeric(long_data))
 
-
-# better for maximizing information content: find culprit element and treat it appropriately
+# for maximizing information content: find culprit element and treat it appropriately
 find_culprit(long_data, should_be = "numeric")
 as.numeric(gsub(",", "", long_data))
+
+# other example: a supposed vector of integers
+integer_vector <- c(1, 2, 2.99, 4, 5)
+
+# straight integer conversion might not resolve deviations as intended
+as.integer(integer_vector)
+
+# better: identify deviation and handle it appropriately
+find_culprit(integer_vector, should_be = "integer")
+round(integer_vector)
 }

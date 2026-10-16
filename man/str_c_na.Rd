@@ -33,13 +33,11 @@ NA-aware drop-in replacement for \link[stringr:str_c]{str_c()}.
 Discards NAs when other strings are present. Reduces multiple NAs to a single one.
 }
 \examples{
-vec <- c("a", NA, "b")
+# default str_c only returns NA
+stringr::str_c("a", NA, "b")
 
-# only returns NA
-stringr::str_c(vec)
-
-# discards NA
-str_c_na(vec)
+# str_c_na discards NAs
+str_c_na("a", NA, "b")
 
 # collapse also discards NAs
 str_c_na(c("a", NA), c(NA, "b"), collapse = ", ")
